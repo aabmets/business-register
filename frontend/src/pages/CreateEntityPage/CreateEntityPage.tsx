@@ -1,6 +1,5 @@
 
 function CreateEntityPage(): JSX.Element {
-
 	return (
 		<div>
 			CreateEntityPage

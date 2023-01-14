@@ -1,6 +1,5 @@
 
 function UpdateEntityPage(): JSX.Element {
-
 	return (
 		<div>
 			UpdateEntityPage

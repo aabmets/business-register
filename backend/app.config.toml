@@ -1,0 +1,23 @@
+# app.config.toml
+
+[graphql]
+debug = true
+
+[uvicorn]
+host = "localhost"
+port = 8080
+log_level = "info"
+access_log = true
+reload = true
+workers = 4
+
+[postgres]
+host = "localhost"
+port = 7070
+username = "postgres"
+password = "postgres"
+
+[cors]
+origins = [
+    "http://localhost:6060"
+]

@@ -1,6 +1,5 @@
 
 function ViewEntityPage(): JSX.Element {
-
 	return (
 		<div>
 			ViewEntityPage

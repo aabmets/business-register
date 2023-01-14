@@ -1,7 +1,15 @@
 // main app configuration
 
 const appConfig = {
-	GraphQLServerUri: 'http://localhost:6060/graphql',
+	graphql: {
+		host: 'localhost',
+		port: 8080,
+		
+		getUri() {
+			const { host, port } = appConfig.graphql;
+			return `http://${host}:${port}/graphql/`
+		}
+	}
 }
 
 export default appConfig;

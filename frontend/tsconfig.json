@@ -20,7 +20,7 @@
 			"@components": ["src/components/_exports"],
 			"@generics": ["src/generics/_exports"],
 			"@pages": ["src/pages/_exports"],
-		}
+		},
 	},
 	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }]

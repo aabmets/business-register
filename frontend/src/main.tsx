@@ -6,7 +6,7 @@ import appConfig from '../appConfig';
 import App from './App';
 
 const client = new ApolloClient({
-	uri: appConfig.GraphQLServerUri,
+	uri: appConfig.graphql.getUri(),
 	cache: new InMemoryCache(),
 });
 
