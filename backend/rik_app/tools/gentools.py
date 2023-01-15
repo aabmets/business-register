@@ -4,8 +4,8 @@ from rik_app.tools import tintools, nametools
 from datetime import datetime, timedelta
 from mimesis.locales import Locale
 from mimesis import Finance
-from mimesis import Person
 from dotmap import DotMap
+from faker import Faker
 import secrets
 import random
 
@@ -13,7 +13,7 @@ import random
 # -------------------------------------------------------------------------------- #
 # As globals to prevent reloading datafiles on each function call.
 finance_data = Finance(locale=Locale.ET)
-person_data = Person(locale=Locale.ET)
+fake = Faker(locale="et_EE")
 
 
 # -------------------------------------------------------------------------------- #
@@ -60,7 +60,7 @@ def generate_tin(person: PersonType) -> str | None:
 def generate_shareholder(equity: int) -> NaturalPerson | JudicialPerson:
     random.seed(secrets.token_bytes(32))
     return Shareholder(
-        name=person_data.full_name(),
+        name=fake.name(),
         tin=generate_tin(PersonType.NATURAL),
         equity=equity,
         founder=True,
