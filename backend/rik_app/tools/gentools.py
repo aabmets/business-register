@@ -42,7 +42,7 @@ def generate_iso_date() -> str:
 
 
 # -------------------------------------------------------------------------------- #
-def generate_tin(person: PersonType) -> str | None:
+def generate_tin(person: PersonType) -> str:
     if person == PersonType.NATURAL:
         century, year, month, day = tintools.generate_tin_date()
         q_nums = tintools.generate_tin_queue_num(person)
@@ -59,9 +59,15 @@ def generate_tin(person: PersonType) -> str | None:
 # -------------------------------------------------------------------------------- #
 def generate_shareholder(equity: int) -> NaturalPerson | JudicialPerson:
     random.seed(secrets.token_bytes(32))
+    tin = generate_tin(PersonType.NATURAL)
+    index = int(tin[0]) % 2  # 0 = female, 1 = male
+    name_func = [
+        fake.name_female,
+        fake.name_male
+    ][index]
     return Shareholder(
-        name=fake.name(),
-        tin=generate_tin(PersonType.NATURAL),
+        name=name_func(),
+        tin=tin,
         equity=equity,
         founder=True,
     )
