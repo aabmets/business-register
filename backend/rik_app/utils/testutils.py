@@ -1,20 +1,16 @@
-from rik_app.models import Person, NaturalPerson, JudicialPerson
 from pydantic import ValidationError
+from typing import Callable
 from dotmap import DotMap
 
 
 # -------------------------------------------------------------------------------- #
-Persons = Person | NaturalPerson | JudicialPerson
-
-
-# -------------------------------------------------------------------------------- #
-def assert_failure(tests: list[DotMap], person: Persons, **replicate):
-    if not callable(person):
+def assert_failure(tests: list[DotMap], model: Callable, **replicate):
+    if not callable(model):
         raise RuntimeError("Target object not callable.")
     for test in tests:
         test.update(replicate)
         try:
-            person(**test)
+            model(**test)
             raise RuntimeError("The test is not supposed to succeed!")
         except ValidationError as obj:
             errors = obj.errors()

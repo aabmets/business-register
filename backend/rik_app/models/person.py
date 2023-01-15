@@ -1,6 +1,6 @@
+from rik_app.tools import tintools
 from pydantic import BaseModel, validator
 from pydantic.fields import ModelField
-from rik_app.tools import tintools
 from typing import Any
 import re
 
@@ -52,8 +52,8 @@ class Person(BaseModel):
         if len(name) > 100:
             raise ValueError("name.too-long")
         for c in name:
-            if not any([c.isalpha(), c.isdecimal(), c.isspace()]):
-                raise ValueError("name.invalid-character")
+            if not c.isprintable():
+                raise ValueError("name.non-printable-char")
         return re.sub(r' +', ' ', name).strip()
 
     # ------------------------------------------------------------ #
@@ -82,15 +82,15 @@ class Person(BaseModel):
     @validator("equity")
     def validate_equity(cls, equity: int) -> int:
         """
-        This function validates that the equity of a person
-        is at least 2 500 units and at most 25 000 units.
+        This function validates that the equity of a Person
+        is at least 1 units and at most 25 000 units.
 
-        :raises "equity.too-small": if equity is less than 2 500.
+        :raises "equity.too-small": if equity is less than 1.
         :raises "equity.too-large": if equity is greater than 25 000.
         :param equity: Persons equity.
         :return: Persons equity, unmodified.
         """
-        if equity < 2500:
+        if equity < 1:
             raise ValueError("equity.too-small")
         if equity > 25000:
             raise ValueError("equity.too-large")

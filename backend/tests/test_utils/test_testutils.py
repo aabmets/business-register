@@ -28,7 +28,7 @@ def test_testutils_not_singular_failure():
 # -------------------------------------------------------------------------------- #
 def test_testutils_good_tests():
     failures = [
-        DotMap(name="#$%~^|&=", tin="12345678", equity=10000, err_msg="name.invalid-character"),
+        DotMap(name=f"{chr(7) * 3}", tin="12345678", equity=10000, err_msg="name.non-printable-char"),
         DotMap(name="ASD FGH", tin="0000", equity=10000, err_msg="tin.invalid-length"),
         DotMap(name="ASD FGH", tin="12345678", equity=0, err_msg="equity.too-small"),
     ]

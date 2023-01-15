@@ -3,6 +3,21 @@ from rik_app.types import *
 
 
 # -------------------------------------------------------------------------------- #
+def test_is_valid_name_char_natural():
+    assert nametools.is_valid_name(' ', PersonType.NATURAL)
+    assert nametools.is_valid_name('ß', PersonType.NATURAL)
+    for c in "()'.&/,":
+        assert not nametools.is_valid_name(c, PersonType.NATURAL)
+
+
+# -------------------------------------------------------------------------------- #
+def test_is_valid_name_char_judicial():
+    assert nametools.is_valid_name(' ', PersonType.JUDICIAL)
+    assert nametools.is_valid_name('ß', PersonType.JUDICIAL)
+    assert nametools.is_valid_name('&', PersonType.JUDICIAL)
+
+
+# -------------------------------------------------------------------------------- #
 def test_name_preprocessing():
     name, words = nametools.preprocess("ABC DEF GHI")
     assert name == "abc def ghi"

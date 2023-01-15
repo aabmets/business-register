@@ -1,9 +1,9 @@
 from ariadne import EnumType, QueryType
-from rik_app.tax_id import TINPerson
+from rik_app.types import PersonType
 
 
 # -------------------------------------------------------------------------------- #
-enum = EnumType("PersonType", TINPerson)
+enum = EnumType("PersonType", PersonType)
 query = QueryType()
 
 
@@ -14,23 +14,23 @@ def resolve_search_companies(_, info, pattern: str):
         "companies": [
             {
                 "name": "Example Company",
-                "tin": "1234567890",
-                "equity": 100,
-                "foundingDate": "2023-01-12",
+                "tin": "12345678",
+                "equity": 2500,
+                "foundingDate": "2022-12-31",
                 "shareholders": [
                     {
                         "name": "John Doe",
-                        "tin": "0987654321",
-                        "equity": 50,
+                        "tin": "12345678999",
+                        "equity": 1000,
                         "founder": True,
-                        "personType": TINPerson.NATURAL
+                        "personType": PersonType.NATURAL
                     },
                     {
                         "name": "Jane Smith",
-                        "tin": "1111111111",
-                        "equity": 25,
+                        "tin": "98765432111",
+                        "equity": 1500,
                         "founder": False,
-                        "personType": TINPerson.NATURAL
+                        "personType": PersonType.NATURAL
                     }
                 ]
             }

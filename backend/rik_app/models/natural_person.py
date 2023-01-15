@@ -12,7 +12,7 @@ class NaturalPerson(Person):
     Exceptions in validator methods are propagated up the execution stack
     by the @validator decorator as pydantic.ValidationError exceptions.
     """
-    founder: bool = None  # assigned by server
+    founder: bool = None  # assigned by caller
     person_type: PersonType = None  # assigned by self
 
     # ------------------------------------------------------------ #
@@ -37,6 +37,8 @@ class NaturalPerson(Person):
         _person = nametools.get_person_from_name(name)
         if _person != PersonType.NATURAL:
             raise ValueError("name.not-natural-type")
+        if not nametools.is_valid_name(name, PersonType.NATURAL):
+            raise ValueError("name.invalid-char-natural")
         if name.count(' ') == 0:
             raise ValueError("name.not-full-natural")
         name = [w.capitalize() for w in name.split(' ')]
@@ -53,7 +55,7 @@ class NaturalPerson(Person):
         :raises "tin.invalid-date-data": if TIN date field is invalid.
         :raises "tin.invalid-checksum": if TIN checksum is invalid.
         :param full_tin: NaturalPersons TIN.
-        :return: NaturalPersons TIN.
+        :return: NaturalPersons TIN, unmodified.
         """
         _person = tintools.get_person_from_tin(full_tin)
         if _person != PersonType.NATURAL:

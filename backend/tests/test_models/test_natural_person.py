@@ -10,12 +10,12 @@ def test_np_valid_values_1():
     np = NaturalPerson(
         name="First Middle Last",  # already valid name
         tin="61104089528",  # full TIN with checksum
-        equity=2500,  # min allowable equity
+        equity=1,  # min allowable equity
         founder=True,
     )
     assert np.name == "First Middle Last"
     assert np.tin == "61104089528"
-    assert np.equity == 2500
+    assert np.equity == 1
     assert np.founder is True
     assert np.person_type == PersonType.NATURAL
 
@@ -55,13 +55,13 @@ def test_np_name_errors():
     tests = [
         DotMap(name="AA", err_msg="name.too-short"),
         DotMap(name=(101 * 'A'), err_msg="name.too-long"),
-        DotMap(name="$$$", err_msg="name.invalid-character"),
+        DotMap(name="(name)", err_msg="name.invalid-char-natural"),
         DotMap(name="ABC OÜ", err_msg="name.not-natural-type"),
         DotMap(name="OsaühingABC", err_msg="name.not-natural-type"),
         DotMap(name="Osaühing ABC", err_msg="name.not-natural-type"),
         DotMap(name="ABC", err_msg="name.not-full-natural"),
     ]
-    testutils.assert_failure(tests, NaturalPerson, tin="51908094712", equity=2500)
+    testutils.assert_failure(tests, NaturalPerson, tin="51908094712", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
@@ -78,13 +78,13 @@ def test_np_tin_errors():
         DotMap(tin="51908095552", err_msg="tin.invalid-checksum"),
         DotMap(tin="51908094718", err_msg="tin.invalid-checksum"),
     ]
-    testutils.assert_failure(tests, NaturalPerson, name="ABC DEF", equity=2500)
+    testutils.assert_failure(tests, NaturalPerson, name="ABC DEF", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
 def test_np_equity_errors():
     tests = [
-        DotMap(equity=2499, err_msg="equity.too-small"),
+        DotMap(equity=0, err_msg="equity.too-small"),
         DotMap(equity=25001, err_msg="equity.too-large"),
     ]
     testutils.assert_failure(tests, NaturalPerson, name="ABC DEF", tin="51908094712")

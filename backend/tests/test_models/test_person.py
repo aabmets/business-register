@@ -9,11 +9,11 @@ def test_person_valid_values_1():
     sh = Person(
         name="First Middle Last",  # already valid name
         tin="61104089528",  # full TIN with checksum
-        equity=2500,  # min allowable equity
+        equity=1,  # min allowable equity
     )
     assert sh.name == "First Middle Last"
     assert sh.tin == "61104089528"
-    assert sh.equity == 2500
+    assert sh.equity == 1
 
 
 # -------------------------------------------------------------------------------- #
@@ -48,9 +48,9 @@ def test_person_name_errors():
     tests = [
         DotMap(name="AA", err_msg="name.too-short"),
         DotMap(name=(101*'A'), err_msg="name.too-long"),
-        DotMap(name="$$$", err_msg="name.invalid-character"),
+        DotMap(name=f"{chr(7) * 3}", err_msg="name.non-printable-char"),
     ]
-    testutils.assert_failure(tests, Person, tin="51908094712", equity=2500)
+    testutils.assert_failure(tests, Person, tin="51908094712", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
@@ -61,13 +61,13 @@ def test_person_tin_errors():
         DotMap(tin="123456789", err_msg="tin.invalid-length"),
         DotMap(tin="123456789012", err_msg="tin.invalid-length"),
     ]
-    testutils.assert_failure(tests, Person, name="ABC DEF", equity=2500)
+    testutils.assert_failure(tests, Person, name="ABC DEF", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
 def test_person_equity_errors():
     tests = [
-        DotMap(equity=2499, err_msg="equity.too-small"),
+        DotMap(equity=0, err_msg="equity.too-small"),
         DotMap(equity=25001, err_msg="equity.too-large"),
     ]
     testutils.assert_failure(tests, Person, name="ABC DEF", tin="51908094712")

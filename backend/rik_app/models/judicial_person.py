@@ -12,7 +12,7 @@ class JudicialPerson(Person):
     Exceptions in validator methods are propagated up the execution stack
     by the @validator decorator as pydantic.ValidationError exceptions.
     """
-    founder: bool = None  # assigned by server
+    founder: bool = None  # assigned by caller
     person_type: PersonType = None  # assigned by self
 
     # ------------------------------------------------------------ #
@@ -37,7 +37,7 @@ class JudicialPerson(Person):
         :raises "name.invalid-id-position": if the identifier is not
             at the beginning or at the end of the name.
         :param name: JudicialPerson name.
-        :return: JudicialPerson name.
+        :return: JudicialPerson name, unmodified.
         """
         _person = nametools.get_person_from_name(name)
         if _person != PersonType.JUDICIAL:
@@ -48,6 +48,8 @@ class JudicialPerson(Person):
             raise ValueError("name.invalid-id-value")
         if not nametools.is_valid_id_position(name):
             raise ValueError("name.invalid-id-position")
+        if not nametools.is_valid_name(name, PersonType.JUDICIAL):
+            raise ValueError("name.invalid-char-judicial")
         return name
 
     # ------------------------------------------------------------ #
@@ -61,7 +63,7 @@ class JudicialPerson(Person):
         :raises "tin.invalid-prefix-data": if TIN prefix field is invalid.
         :raises "tin.judicial-bad-crc": if TIN checksum is invalid.
         :param full_tin: JudicialPersons TIN.
-        :return: JudicialPersons TIN.
+        :return: JudicialPersons TIN, unmodified.
         """
         _person = tintools.get_person_from_tin(full_tin)
         if _person != PersonType.JUDICIAL:

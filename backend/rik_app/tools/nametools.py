@@ -3,6 +3,28 @@ import re
 
 
 # -------------------------------------------------------------------------------- #
+valid_chars_extra = "()'.&/,"  # chars in mimesis data
+valid_name_chars = ''.join([   # as defined by law
+    "abcdefghijklmnopqrsšzžtuvwõäöüxyàáâãāăåąæćčçďđðèéê",
+    "ēėëěęğģìíîīıïįķĺľļłńñňņòóôōőøœŕřŗśşßťţþùúûūůűųýÿźż-"
+])
+
+
+# -------------------------------------------------------------------------------- #
+def is_valid_name(name: str, person: PersonType) -> bool:
+    judicial = (person == PersonType.JUDICIAL)
+    for c in name:
+        conditions = [
+            c.isspace(),
+            c.lower() in valid_name_chars,
+            c.lower() in valid_chars_extra if judicial else False,
+        ]
+        if not any(conditions):
+            return False
+    return True
+
+
+# -------------------------------------------------------------------------------- #
 def preprocess(name: str) -> (str, str):
     name = name if name.islower() else name.lower()
     words = name.split(' ')
@@ -70,6 +92,7 @@ def get_person_from_name(name: str) -> PersonType | None:
 
 # -------------------------------------------------------------------------------- #
 __all__ = [
+    "is_valid_name",
     "preprocess",
     "get_identifier_count",
     "get_identifier_value",

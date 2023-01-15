@@ -4,17 +4,17 @@ enum PersonType {
 }
 
 input ShareholderInput {
-	name: String!
-	tin: String!
-	equity: Int!
+	name: String
+	tin: String
+	equity: Int
 }
 
 input CompanyDetailsInput {
-	name: String!
-	tin: String!
-	equity: Int!
-	foundingDate: String!
-	shareholders: [ShareholderInput!]!
+	name: String
+	tin: String
+	equity: Int
+	foundingDate: String
+	shareholders: [ShareholderInput]
 }
 
 type Shareholder {

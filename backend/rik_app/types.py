@@ -14,8 +14,9 @@ class TINLength(Enum):
 
 # -------------------------------------------------------------------------------- #
 class PersonType(Enum):
-    NATURAL = "Natural Person"
-    JUDICIAL = "Judicial Person"
+    NATURAL = "NATURAL"
+    JUDICIAL = "JUDICIAL"
+    INVALID = "INVALID"  # for testing purposes only
 
 
 # -------------------------------------------------------------------------------- #

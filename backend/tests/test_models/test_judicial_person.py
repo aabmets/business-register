@@ -10,13 +10,13 @@ def test_np_valid_values_1():
     np = JudicialPerson(
         name="Asperon OÜ",  # already valid name
         tin="16272114",  # full TIN with checksum
-        equity=2500,  # min allowable equity
+        equity=1,  # min allowable equity
         founder=True,
         person_type=PersonType.NATURAL
     )
     assert np.name == "Asperon OÜ"
     assert np.tin == "16272114"
-    assert np.equity == 2500
+    assert np.equity == 1
     assert np.founder is True
     assert np.person_type == PersonType.JUDICIAL
 
@@ -57,7 +57,7 @@ def test_np_name_errors():
     tests = [
         DotMap(name="AA", err_msg="name.too-short"),
         DotMap(name=(101 * 'A'), err_msg="name.too-long"),
-        DotMap(name="$$$", err_msg="name.invalid-character"),
+        DotMap(name="$$$ OÜ", err_msg="name.invalid-char-judicial"),
         DotMap(name="ABC ABC", err_msg="name.not-judicial-type"),
         DotMap(name="OÜ ABC OÜ", err_msg="name.invalid-id-count"),
         DotMap(name="Osaühing ABC osaühing", err_msg="name.invalid-id-count"),
@@ -66,7 +66,7 @@ def test_np_name_errors():
         DotMap(name="ABC OÜ DEF", err_msg="name.invalid-id-position"),
         DotMap(name="ABC Osaühing DEF", err_msg="name.invalid-id-position"),
     ]
-    testutils.assert_failure(tests, JudicialPerson, tin="16272114", equity=2500)
+    testutils.assert_failure(tests, JudicialPerson, tin="16272114", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
@@ -83,13 +83,13 @@ def test_np_tin_errors():
         DotMap(tin="16272110", err_msg="tin.invalid-checksum"),
         DotMap(tin="16272118", err_msg="tin.invalid-checksum"),
     ]
-    testutils.assert_failure(tests, JudicialPerson, name="Asperon OÜ", equity=2500)
+    testutils.assert_failure(tests, JudicialPerson, name="Asperon OÜ", equity=1)
 
 
 # -------------------------------------------------------------------------------- #
 def test_np_equity_errors():
     tests = [
-        DotMap(equity=2499, err_msg="equity.too-small"),
+        DotMap(equity=0, err_msg="equity.too-small"),
         DotMap(equity=25001, err_msg="equity.too-large"),
     ]
     testutils.assert_failure(tests, JudicialPerson, name="Asperon OÜ", tin="16272114")
