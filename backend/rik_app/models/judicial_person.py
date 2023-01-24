@@ -17,6 +17,7 @@ class JudicialPerson(Person):
 
     # ------------------------------------------------------------ #
     def __init__(self, **kwargs):
+        kwargs.pop("person_type", None)
         super().__init__(**kwargs)
         self.person_type = PersonType.JUDICIAL
 
@@ -47,8 +48,10 @@ class JudicialPerson(Person):
         if not nametools.is_valid_id_value(name):
             raise ValueError("name.invalid-id-value")
         if not nametools.is_valid_id_position(name):
+            print("bad name: " + name)
             raise ValueError("name.invalid-id-position")
         if not nametools.is_valid_name(name, PersonType.JUDICIAL):
+            print("invalid name: " + name)
             raise ValueError("name.invalid-char-judicial")
         return name
 

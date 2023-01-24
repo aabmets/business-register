@@ -1,4 +1,4 @@
-from rik_app.types import TINLength, PersonType
+from rik_app.types import *
 from datetime import datetime
 from itertools import cycle
 import calendar
@@ -7,17 +7,6 @@ import secrets
 
 # -------------------------------------------------------------------------------- #
 Input = list[int | str] | str
-
-
-# -------------------------------------------------------------------------------- #
-def get_person_from_tin(tin: str) -> PersonType | None:
-    n_enums = [TINLength.FULL_NATURAL, TINLength.PARTIAL_NATURAL]
-    j_enums = [TINLength.FULL_JUDICIAL, TINLength.PARTIAL_JUDICIAL]
-    if len(tin) in [e.value for e in n_enums]:
-        return PersonType.NATURAL
-    elif len(tin) in [e.value for e in j_enums]:
-        return PersonType.JUDICIAL
-    return None
 
 
 # -------------------------------------------------------------------------------- #
@@ -141,11 +130,23 @@ def assemble_full_tin(partial1: Input, partial2: Input = None) -> str:
 
 
 # -------------------------------------------------------------------------------- #
+def get_person_from_tin(tin: str) -> PersonType | None:
+    if tin and tin.isdecimal():
+        n_enums = [TINLength.FULL_NATURAL, TINLength.PARTIAL_NATURAL]
+        j_enums = [TINLength.FULL_JUDICIAL, TINLength.PARTIAL_JUDICIAL]
+        if len(tin) in [e.value for e in n_enums]:
+            return PersonType.NATURAL
+        elif len(tin) in [e.value for e in j_enums]:
+            return PersonType.JUDICIAL
+    return None
+
+
+# -------------------------------------------------------------------------------- #
 __all__ = [
-    "get_person_from_tin",
     "is_full_tin", "is_partial_tin",
     "generate_tin_date", "validate_tin_date",
     "generate_tin_prefix", "validate_tin_prefix",
     "generate_tin_checksum", "validate_tin_checksum",
-    "generate_tin_queue_num", "assemble_full_tin"
+    "generate_tin_queue_num", "assemble_full_tin",
+    "get_person_from_tin",
 ]

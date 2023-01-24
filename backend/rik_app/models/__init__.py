@@ -5,6 +5,7 @@ from .company import Company
 from .person import Person
 
 
+# -------------------------------------------------------------------------------- #
 __all__ = [
     "Shareholder",
     "Shareholders",

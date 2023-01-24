@@ -20,7 +20,7 @@ def find_graphql_schema_file(ref: str) -> Path:
 
 # -------------------------------------------------------------------------------- #
 def find_app_config_file(ref: str) -> Path:
-    return file_finder(ref, "app.config.toml")
+    return file_finder(ref, "app_config.toml")
 
 
 # -------------------------------------------------------------------------------- #

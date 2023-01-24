@@ -1,0 +1,68 @@
+type Shareholder {
+	name: String!
+	tin: String!
+	equity: Int!
+	founder: Boolean!  # assigned by server
+}
+
+type CompanyDetails {
+	name: String!
+	tin: String!
+	equity: Int!
+	founding_date: String!
+	shareholders: [Shareholder!]!
+}
+
+input ShareholderInput {
+	name: String
+	tin: String
+	equity: Int
+	field_id: String!
+}
+
+input CompanyDetailsInput {
+	name: String
+	tin: String
+	equity: Int
+	founding_date: String
+	shareholders: [ShareholderInput]
+	field_id: String!
+}
+
+type CompanyOverview {
+	name: String!
+	tin: String!
+}
+
+type SearchCompaniesPayload {
+	data: [CompanyOverview]
+	result: Boolean!
+	error: String
+}
+
+type GetCompanyDetailsPayload {
+	data: CompanyDetails
+	result: Boolean!
+	error: String
+}
+
+type MutateCompanyDetailsPayload {
+	data: CompanyDetails
+	result: Boolean!
+	errors: [Error]
+}
+
+type Error {
+	field_id: String!
+	message: String!
+}
+
+type Query {
+	searchCompanies(pattern: String!): SearchCompaniesPayload!
+	getCompanyDetails(tin: String!): GetCompanyDetailsPayload!
+}
+
+type Mutation {
+	createCompany(data: CompanyDetailsInput!): MutateCompanyDetailsPayload!
+	updateCompany(data: CompanyDetailsInput!): MutateCompanyDetailsPayload!
+}

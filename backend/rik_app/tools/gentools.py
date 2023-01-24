@@ -1,11 +1,12 @@
+from rik_app.types import *
 from rik_app.models import *
-from rik_app.types import PersonType
 from rik_app.tools import tintools, nametools
 from datetime import datetime, timedelta
 from mimesis.locales import Locale
 from mimesis import Finance
 from dotmap import DotMap
 from faker import Faker
+from typing import Any
 import secrets
 import random
 
@@ -42,7 +43,7 @@ def generate_iso_date() -> str:
 
 
 # -------------------------------------------------------------------------------- #
-def generate_tin(person: PersonType) -> str:
+def generate_tin(person: PersonType | Any) -> str:
     if person == PersonType.NATURAL:
         century, year, month, day = tintools.generate_tin_date()
         q_nums = tintools.generate_tin_queue_num(person)
@@ -57,7 +58,27 @@ def generate_tin(person: PersonType) -> str:
 
 
 # -------------------------------------------------------------------------------- #
-def generate_shareholder(equity: int) -> NaturalPerson | JudicialPerson:
+def generate_judicial_name() -> str:
+    name = finance_data.company()
+    id_count = nametools.get_identifier_count(name)
+    if id_count == 1:
+        pos = nametools.get_identifier_position(name)
+        if pos in [0, -1]:
+            _id = nametools.get_identifier_value(name)
+            name_arr = name.split()
+            for word in name_arr[:]:
+                if word.lower() == _id:
+                    name_arr.remove(word)
+            name = ' '.join(name_arr)
+        else:  # pragma: no cover
+            return generate_judicial_name()
+    elif id_count > 1:  # pragma: no cover
+        return generate_judicial_name()
+    return name + ' OÜ'
+
+
+# -------------------------------------------------------------------------------- #
+def generate_shareholder(equity: int, founder: bool) -> NaturalPerson | JudicialPerson:
     random.seed(secrets.token_bytes(32))
     tin = generate_tin(PersonType.NATURAL)
     index = int(tin[0]) % 2  # 0 = female, 1 = male
@@ -69,28 +90,57 @@ def generate_shareholder(equity: int) -> NaturalPerson | JudicialPerson:
         name=name_func(),
         tin=tin,
         equity=equity,
-        founder=True,
+        founder=founder,
     )
 
 
 # -------------------------------------------------------------------------------- #
-def generate_company() -> Company:
+def generate_company_names(count: int) -> list:
+    names = []
+    clamped_count = min(max(count, 0), 300)
+    while clamped_count != 0:
+        name = generate_judicial_name()
+        if name not in names:
+            names.append(name)
+            clamped_count -= 1
+    return names
+
+
+# -------------------------------------------------------------------------------- #
+def generate_company_tins(count: int) -> list:
+    tins = []
+    clamped_count = min(max(count, 0), 300)
+    while clamped_count != 0:
+        tin = generate_tin(PersonType.JUDICIAL)
+        if tin not in tins:  # pragma: no branch
+            tins.append(tin)
+            clamped_count -= 1
+    return tins
+
+
+# -------------------------------------------------------------------------------- #
+def generate_company(name: str, tin: str) -> Company:
     random.seed(secrets.token_bytes(32))
     data = generate_equity()
     shds: Shareholders = []
     for i in range(len(data.shares)):
         equity = data.shares[i]
-        sh = generate_shareholder(equity)
+        if len(shds) == 0:
+            founder = True
+        else:
+            founder = random.choices(
+                [True, False],
+                weights=[3, 1]
+            )[0]
+        sh = generate_shareholder(equity, founder)
         shds.append(sh)
-    name = finance_data.company()
-    count = nametools.get_identifier_count(name)
-    name = name + ' OÜ' if not count else name
-    Company.disable_date_validation()
+    date = generate_iso_date()
+    Company.set_date_validation(False)
     company = Company(
         name=name,
-        tin=generate_tin(PersonType.JUDICIAL),
+        tin=tin,
         equity=data.equity,
-        founding_date=generate_iso_date(),
+        founding_date=date,
         shareholders=shds,
     )
     Company.enable_date_validation()
@@ -98,10 +148,28 @@ def generate_company() -> Company:
 
 
 # -------------------------------------------------------------------------------- #
+def generate_companies(count: int) -> list[Company]:
+    names = generate_company_names(count)
+    tins = generate_company_tins(count)
+    companies = []
+    for _ in range(count):
+        company = generate_company(
+            name=names.pop(),
+            tin=tins.pop()
+        )
+        companies.append(company)
+    return companies
+
+
+# -------------------------------------------------------------------------------- #
 __all__ = [
     "generate_equity",
     "generate_iso_date",
     "generate_tin",
+    "generate_judicial_name",
     "generate_shareholder",
+    "generate_company_names",
+    "generate_company_tins",
     "generate_company",
+    "generate_companies"
 ]

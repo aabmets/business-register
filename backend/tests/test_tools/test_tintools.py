@@ -3,25 +3,6 @@ from rik_app.types import *
 
 
 # -------------------------------------------------------------------------------- #
-def test_get_person_from_tin_failure():
-    assert tintools.get_person_from_tin('0' * 6) is None
-    assert tintools.get_person_from_tin('0' * 9) is None
-    assert tintools.get_person_from_tin('0' * 12) is None
-
-
-# -------------------------------------------------------------------------------- #
-def test_get_natural_person_from_tin():
-    assert tintools.get_person_from_tin('0' * 10) == PersonType.NATURAL
-    assert tintools.get_person_from_tin('0' * 11) == PersonType.NATURAL
-
-
-# -------------------------------------------------------------------------------- #
-def test_get_judicial_person_from_tin():
-    assert tintools.get_person_from_tin('0' * 7) == PersonType.JUDICIAL
-    assert tintools.get_person_from_tin('0' * 8) == PersonType.JUDICIAL
-
-
-# -------------------------------------------------------------------------------- #
 def test_is_full_tin():
     for x in range(1, 20):
         result = tintools.is_full_tin('0' * x)
@@ -135,3 +116,24 @@ def test_natural_person_tins():
         q_num = tintools.generate_tin_queue_num(PersonType.NATURAL)
         full_tin = tintools.assemble_full_tin(tin_date, q_num)
         assert tintools.validate_tin_checksum(full_tin)
+
+
+# -------------------------------------------------------------------------------- #
+def test_get_person_from_tin_failure():
+    assert tintools.get_person_from_tin('') is None
+    assert tintools.get_person_from_tin('0' * 6) is None
+    assert tintools.get_person_from_tin('0' * 9) is None
+    assert tintools.get_person_from_tin('0' * 12) is None
+    assert tintools.get_person_from_tin('1234567m') is None
+
+
+# -------------------------------------------------------------------------------- #
+def test_get_natural_person_from_tin():
+    assert tintools.get_person_from_tin('0' * 10) == PersonType.NATURAL
+    assert tintools.get_person_from_tin('0' * 11) == PersonType.NATURAL
+
+
+# -------------------------------------------------------------------------------- #
+def test_get_judicial_person_from_tin():
+    assert tintools.get_person_from_tin('0' * 7) == PersonType.JUDICIAL
+    assert tintools.get_person_from_tin('0' * 8) == PersonType.JUDICIAL

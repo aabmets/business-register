@@ -1,6 +1,6 @@
-from rik_app.tools import tintools
 from pydantic import BaseModel, validator
 from pydantic.fields import ModelField
+from rik_app.tools import tintools
 from typing import Any
 import re
 

@@ -2,14 +2,16 @@ from datetime import datetime, date, timedelta
 from pydantic import validator, root_validator
 from .judicial_person import JudicialPerson
 from .shareholder import Shareholders
+from copy import deepcopy
+from dotmap import DotMap
 
 
 # -------------------------------------------------------------------------------- #
 class Company(JudicialPerson):
     """
     Pydantic object with field validations.
-    Founding date validation can be temporarily disabled by functions
-    in the gentools module when generating dummy data for the database.
+    Founding date validation can be temporarily disabled and re-enabled with
+    the Company object class methods when generating dummy data for the database.
     Exceptions in validator methods are propagated up the execution stack
     by the @validator decorator as pydantic.ValidationError exceptions.
     """
@@ -17,9 +19,26 @@ class Company(JudicialPerson):
     shareholders: Shareholders = None
 
     # ------------------------------------------------------------ #
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if hasattr(self, "founder"):  # pragma: no branch
+            delattr(self, "founder")
+
+    # ------------------------------------------------------------ #
+    def to_dict(self) -> dict:
+        copy = deepcopy(self)
+        copy.shareholders = [sh.dict(exclude={"person_type"}) for sh in self.shareholders]
+        copy.founding_date = str(self.founding_date)
+        return copy.dict(exclude={"person_type"})
+
+    # ------------------------------------------------------------ #
+    def to_dotmap(self) -> DotMap:
+        return DotMap(self.to_dict())
+
+    # ------------------------------------------------------------ #
     @classmethod
-    def disable_date_validation(cls) -> None:
-        cls.__date_validation__ = False
+    def set_date_validation(cls, value: bool) -> None:
+        cls.__date_validation__ = value
 
     # ------------------------------------------------------------ #
     @classmethod
@@ -79,6 +98,8 @@ class Company(JudicialPerson):
 
         :raises "shareholders.empty-not-allowed": if the shareholders list
             is either empty or nonexistent.
+        :raises "shareholders.duplicates-not-allowed": if the shareholders list
+            contains persons with identical TIN-s.
         :raises "shareholders.equity-mismatch": if the equities of the
             shareholders do not equal the equity of the company.
         :param shds: List of shareholders.
@@ -87,6 +108,9 @@ class Company(JudicialPerson):
         """
         if not shds:
             raise TypeError("shareholders.empty-not-allowed")
+        tins = [sh.tin for sh in shds]
+        if len(tins) != len(set(tins)):
+            raise ValueError("shareholders.duplicates-not-allowed")
         shds_equity = sum([sh.equity for sh in shds])
         company_equity = values.get('equity', 0)
         if company_equity != shds_equity:

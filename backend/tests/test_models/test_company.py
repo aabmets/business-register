@@ -14,9 +14,9 @@ def baseline_data():
         "tin": "16272114",
         "equity": 3000,
         "shareholders": [
-            Shareholder(name="ABC DEF", tin="61104089528", equity=1000),
-            Shareholder(name="GHI JKL", tin="43804052213", equity=1000),
-            Shareholder(name="WER BNM", tin="45902167078", equity=1000),
+            Shareholder(name="ABC DEF", tin="61104089528", equity=1000, founder=True),
+            Shareholder(name="GHI JKL", tin="43804052213", equity=1000, founder=True),
+            Shareholder(name="WER BNM", tin="45902167078", equity=1000, founder=True),
         ],
     }
 
@@ -69,7 +69,7 @@ def test_company_date_passthrough(baseline_data: dict):
     baseline_data["founding_date"] = too_far_past
     with pytest.raises(ValidationError):
         Company(**baseline_data)
-    Company.disable_date_validation()
+    Company.set_date_validation(False)
     Company(**baseline_data)
     Company.enable_date_validation()
 
@@ -82,6 +82,15 @@ def test_company_shareholders_empty_list(baseline_data: dict):
     data2 = {**baseline_data, "shareholders": []}
     testutils.assert_failure(tests, Company, **data1)
     testutils.assert_failure(tests, Company, **data2)
+
+
+# -------------------------------------------------------------------------------- #
+def test_company_shareholders_duplicates(baseline_data: dict):
+    sh = Shareholder(name="RET BSG", tin="45902167078", equity=1000)
+    baseline_data["shareholders"].append(sh)
+    today = datetime.now().date()
+    tests = [DotMap(founding_date=today, err_msg="shareholders.duplicates-not-allowed")]
+    testutils.assert_failure(tests, Company, **baseline_data)
 
 
 # -------------------------------------------------------------------------------- #
@@ -103,3 +112,46 @@ def test_company_equity_too_small(baseline_data: dict):
 
     tests = [DotMap(founding_date=today, err_msg="equity.too-small")]
     testutils.assert_failure(tests, Company, **baseline_data)
+
+
+# -------------------------------------------------------------------------------- #
+def test_company_to_dict(baseline_data: dict):
+    f_date = datetime.now().date()
+    c_dict = Company(
+        founding_date=f_date,
+        **baseline_data
+    ).to_dict()
+    assert c_dict == {
+        "name": "Asperon OÜ",
+        "tin": "16272114",
+        "equity": 3000,
+        "founding_date": str(f_date),
+        "shareholders": [
+            {
+                "name": "Abc Def",
+                "tin": "61104089528",
+                "equity": 1000,
+                "founder": True
+            }, {
+                "name": "Ghi Jkl",
+                "tin": "43804052213",
+                "equity": 1000,
+                "founder": True
+            }, {
+                "name": "Wer Bnm",
+                "tin": "45902167078",
+                "equity": 1000,
+                "founder": True,
+            }
+        ],
+    }
+
+
+# -------------------------------------------------------------------------------- #
+def test_company_to_dotmap(baseline_data: dict):
+    f_date = datetime.now().date()
+    c_dm = Company(
+        founding_date=f_date,
+        **baseline_data
+    ).to_dotmap()
+    assert isinstance(c_dm, DotMap)

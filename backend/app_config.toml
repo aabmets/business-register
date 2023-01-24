@@ -1,4 +1,4 @@
-# app.config.toml
+# app_config.toml
 
 [graphql]
 debug = true
@@ -14,8 +14,11 @@ workers = 4
 [postgres]
 host = "localhost"
 port = 7070
-username = "postgres"
+user = "postgres"
 password = "postgres"
+database = "rik_app"
+timeout = 5
+command_timeout = 10
 
 [cors]
 origins = [

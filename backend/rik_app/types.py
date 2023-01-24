@@ -16,8 +16,10 @@ class TINLength(Enum):
 class PersonType(Enum):
     NATURAL = "NATURAL"
     JUDICIAL = "JUDICIAL"
-    INVALID = "INVALID"  # for testing purposes only
 
 
 # -------------------------------------------------------------------------------- #
-__all__ = ["TINLength", "PersonType"]
+__all__ = [
+    "TINLength",
+    "PersonType",
+]

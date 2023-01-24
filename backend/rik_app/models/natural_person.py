@@ -17,6 +17,7 @@ class NaturalPerson(Person):
 
     # ------------------------------------------------------------ #
     def __init__(self, **kwargs):
+        kwargs.pop("person_type", None)
         super().__init__(**kwargs)
         self.person_type = PersonType.NATURAL
 

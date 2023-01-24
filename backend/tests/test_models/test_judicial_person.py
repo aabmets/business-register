@@ -12,7 +12,6 @@ def test_np_valid_values_1():
         tin="16272114",  # full TIN with checksum
         equity=1,  # min allowable equity
         founder=True,
-        person_type=PersonType.NATURAL
     )
     assert np.name == "Asperon OÜ"
     assert np.tin == "16272114"

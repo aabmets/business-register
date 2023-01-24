@@ -1,4 +1,4 @@
-from rik_app.models import NaturalPerson
+from rik_app.models import *
 from rik_app.types import PersonType
 from rik_app.utils import testutils
 from pydantic import ValidationError

@@ -6,8 +6,9 @@ from rik_app.types import *
 def test_is_valid_name_char_natural():
     assert nametools.is_valid_name(' ', PersonType.NATURAL)
     assert nametools.is_valid_name('ß', PersonType.NATURAL)
-    for c in "()'.&/,":
+    for c in "()'.&/,1234567890":
         assert not nametools.is_valid_name(c, PersonType.NATURAL)
+    assert not nametools.is_valid_name("12345678", PersonType.NATURAL)
 
 
 # -------------------------------------------------------------------------------- #
@@ -15,6 +16,7 @@ def test_is_valid_name_char_judicial():
     assert nametools.is_valid_name(' ', PersonType.JUDICIAL)
     assert nametools.is_valid_name('ß', PersonType.JUDICIAL)
     assert nametools.is_valid_name('&', PersonType.JUDICIAL)
+    assert not nametools.is_valid_name("12345678", PersonType.JUDICIAL)
 
 
 # -------------------------------------------------------------------------------- #
@@ -39,7 +41,9 @@ def test_name_id_count():
 # -------------------------------------------------------------------------------- #
 def test_name_id_value():
     assert nametools.get_identifier_value("Osaühing ABC") == "osaühing"
+    assert nametools.get_identifier_value("Aktsiaselts ABC") == "aktsiaselts"
     assert nametools.get_identifier_value("ABC OÜ") == "oü"
+    assert nametools.get_identifier_value("ABC AS") == "as"
     assert nametools.get_identifier_value("ABCOsaühing") is None
     assert nametools.get_identifier_value("ABC") is None
 

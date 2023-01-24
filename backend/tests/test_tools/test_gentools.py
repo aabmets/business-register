@@ -31,21 +31,47 @@ def test_generate_tin():
         tin = gentools.generate_tin(PersonType.JUDICIAL)
         assert tintools.validate_tin_checksum(tin)
     with pytest.raises(TypeError):
-        gentools.generate_tin(PersonType.INVALID)
+        gentools.generate_tin("asdfg")
+
+
+# -------------------------------------------------------------------------------- #
+def test_generate_judicial_name():
+    for _ in range(100):
+        name = gentools.generate_judicial_name()
+        assert 'OÜ' in name
 
 
 # -------------------------------------------------------------------------------- #
 def test_generate_shareholder():
-    sh = gentools.generate_shareholder(12345)
+    sh = gentools.generate_shareholder(12345, founder=True)
     assert sh.equity == 12345
 
 
 # -------------------------------------------------------------------------------- #
+def test_generate_company_names():
+    names = gentools.generate_company_names(100)
+    assert len(names) == len(set(names))
+
+
+# -------------------------------------------------------------------------------- #
+def test_generate_company_tins():
+    tins = gentools.generate_company_tins(100)
+    assert len(tins) == len(set(tins))
+
+
+# -------------------------------------------------------------------------------- #
 def test_generate_company():
-    company = gentools.generate_company()
+    tin = gentools.generate_tin(PersonType.JUDICIAL)
+    company = gentools.generate_company(name="Tele2 AS", tin=tin)
     assert nametools.is_valid_name(company.name, PersonType.JUDICIAL)
     assert tintools.get_person_from_tin(company.tin) == PersonType.JUDICIAL
     assert tintools.validate_tin_checksum(company.tin)
     assert company.founding_date <= datetime.now().date()
     summed_equity = sum([sh.equity for sh in company.shareholders])
     assert summed_equity == company.equity
+
+
+# -------------------------------------------------------------------------------- #
+def test_generate_companies():
+    companies = gentools.generate_companies(100)
+    assert len(companies) == 100
