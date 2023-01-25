@@ -1,4 +1,9 @@
 # rik-business-register
-A project for my portfolio which showcases the usage of a Vite + React frontend with a custom FastAPI + PostgreSQL backend.
 
 ***WORK IN PROGRESS***
+
+## Description
+A project for my portfolio which showcases GraphQL communication between a Vite + React frontend and a Starlette + PostgreSQL backend.
+
+# Tech Stack
+![Tech Stack](artwork/tech_stack.png)
