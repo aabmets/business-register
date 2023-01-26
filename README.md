@@ -1,6 +1,4 @@
-# rik-business-register
-
-***WORK IN PROGRESS***
+# ***WORK IN PROGRESS***
 
 ## Description
 A project for my portfolio which showcases GraphQL communication between a Vite + React frontend and a Starlette + PostgreSQL backend.
