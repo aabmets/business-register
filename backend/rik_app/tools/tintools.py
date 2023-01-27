@@ -1,4 +1,4 @@
-from rik_app.types import *
+from rik_app.rik_types import *
 from datetime import datetime
 from itertools import cycle
 import calendar

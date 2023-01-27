@@ -1,4 +1,4 @@
-from rik_app.types import *
+from rik_app.rik_types import *
 from rik_app.models import *
 from rik_app.tools import tintools, nametools
 from datetime import datetime, timedelta

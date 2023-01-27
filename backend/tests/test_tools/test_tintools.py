@@ -1,5 +1,5 @@
 from rik_app.tools import tintools
-from rik_app.types import *
+from rik_app.rik_types import *
 
 
 # -------------------------------------------------------------------------------- #

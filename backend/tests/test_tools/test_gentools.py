@@ -1,5 +1,5 @@
 from rik_app.tools import tintools, gentools, nametools
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from datetime import datetime, date
 import pytest
 

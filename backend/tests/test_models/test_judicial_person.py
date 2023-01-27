@@ -1,5 +1,5 @@
 from rik_app.models import JudicialPerson
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from rik_app.utils import testutils
 from pydantic import ValidationError
 from dotmap import DotMap

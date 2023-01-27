@@ -1,7 +1,7 @@
 from ariadne import QueryType, MutationType
 from rik_app.tools import nametools, tintools
 from rik_app.db import DatabaseSingleton
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from dotmap import DotMap
 from .helpers import *
 import json

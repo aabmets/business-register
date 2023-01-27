@@ -1,4 +1,4 @@
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from rik_app.tools import nametools
 from rik_app.tools import tintools
 from pydantic import validator

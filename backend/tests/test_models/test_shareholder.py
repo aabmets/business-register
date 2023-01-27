@@ -1,5 +1,5 @@
 from rik_app.models import *
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from pydantic import ValidationError
 import pytest
 

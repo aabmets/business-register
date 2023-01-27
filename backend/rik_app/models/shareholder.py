@@ -1,6 +1,6 @@
 from .natural_person import NaturalPerson
 from .judicial_person import JudicialPerson
-from rik_app.types import PersonType
+from rik_app.rik_types import PersonType
 from rik_app.tools import nametools
 
 
