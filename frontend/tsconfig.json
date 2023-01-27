@@ -3,7 +3,7 @@
 		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"allowJs": false,
+		"allowJs": true,
 		"skipLibCheck": true,
 		"esModuleInterop": false,
 		"allowSyntheticDefaultImports": true,
@@ -18,12 +18,13 @@
 		"baseUrl": ".",
 		"paths": {
 			"@components": ["src/components/_exports"],
-			"@generics": ["unused_code/generics/_exports"],
 			"@pages": ["src/pages/_exports"],
 			"@graphql": ["src/graphql"],
 			"@types": ["src/types"],
 		},
 	},
-	"include": ["src", "unused_code/generics"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": ["src"],
+	"references": [
+		{ "path": "./tsconfig.node.json" }
+	]
 }

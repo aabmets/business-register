@@ -130,7 +130,7 @@ def generate_company(name: str, tin: str) -> Company:
         else:
             founder = random.choices(
                 [True, False],
-                weights=[3, 1]
+                weights=[2, 1]
             )[0]
         sh = generate_shareholder(equity, founder)
         shds.append(sh)

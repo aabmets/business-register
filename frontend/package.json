@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"start": "nodemon src/express.js"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.7.3",
@@ -25,6 +26,7 @@
 		"graphql": "^16.6.0",
 		"graphql-import-node": "^0.0.5",
 		"i18next": "^22.4.9",
+		"nodemon": "^2.0.20",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-i18next": "^12.1.4",

@@ -39,44 +39,44 @@ function CompanyDetailsCard(props: CompanyDetailsCardProps): JSX.Element {
 			<div className={styles.line}/>
 			<Flex direction='row'>
 				<Flex direction='column' className={styles.shPct}>
-					{shareholders.map((sh) => 
-						<Text className={styles.regularText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'pct-' + index} className={styles.regularText}>
 							{`${(sh.equity / equity * 100).toFixed(2)}%`}
 						</Text>
 					)}
 				</Flex>
 				<Flex direction='column' className={styles.space}/>
 				<Flex direction='column' className={styles.shEquity}>
-					{shareholders.map((sh) => 
-						<Text className={styles.regularText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'equity-' + index} className={styles.regularText}>
 							{`${sh.equity} EUR`}
 						</Text>
 					)}
 				</Flex>
 				<Flex direction='column' className={styles.shName}>
-					{shareholders.map((sh) => 
-						<Text className={styles.boldText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'name-' + index} className={styles.boldText}>
 							{sh.name}
 						</Text>
 					)}
 				</Flex>
 				<Flex direction='column' className={styles.shTin}>
-					{shareholders.map((sh) => 
-						<Text className={styles.regularText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'tin-' + index} className={styles.regularText}>
 							{sh.tin}
 						</Text>
 					)}
 				</Flex>
 				<Flex direction='column' className={styles.shFounder}>
-					{shareholders.map((sh) => 
-						<Text className={styles.regularText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'founder-' + index} className={styles.regularText}>
 							{sh.founder ? 'Jah' : 'Ei'}
 						</Text>
 					)}
 				</Flex>
 				<Flex direction='column' className={styles.shType}>
-					{shareholders.map((sh) => 
-						<Text className={styles.regularText}>
+					{shareholders.map((sh, index) => 
+						<Text key={'type-' + index} className={styles.regularText}>
 							{sh.tin.length == 11 ? 'Eraisik' : 'Ettevõte'}
 						</Text>
 					)}
