@@ -1,0 +1,82 @@
+.companyDetailsCard {
+	width: 50vw;
+	min-width: 800px;
+	box-shadow: 0 0.3rem 0.4rem 0 #c2c0c2;
+	padding-top: 25px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 25px;
+	min-height: 300px;
+}
+.companyDetails {
+	padding-bottom: 20px;
+	gap: 30px;
+}
+.boldText {
+	color: #4A5465;
+	font-weight: 600;
+	font-size: 1.1rem;
+}
+.regularText {
+	color: #4a4a4a;
+	font-weight: 350;
+	font-size: 1.1rem;
+}
+.line {
+	width: 100%;
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 10px;
+}
+.space {
+	min-width: 10px; 
+	max-width: 40px;
+	width: 10%;
+}
+.shPct {
+	min-width: 80px;
+	text-align: end;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.shEquity {
+	width: 30%;
+	min-width: 90px;
+	max-width: 130px;
+	text-align: start;
+	white-space: nowrap;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.shName {
+	width: 40%;
+	min-width: 150px; 
+	max-width: 250px;
+	text-align: start;
+	white-space: nowrap;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.shTin {
+	width: 30%;
+	min-width: 120px; 
+	max-width: 150px;
+	text-align: end;
+	padding-left: 5px;
+	padding-right: 25px;
+}
+.shFounder {
+	width: 20%;
+	min-width: 60px; 
+	max-width: 120px;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.shType {
+	width: 20%;
+	min-width: 60px; 
+	max-width: 120px;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+}

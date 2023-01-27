@@ -18,10 +18,12 @@
 		"baseUrl": ".",
 		"paths": {
 			"@components": ["src/components/_exports"],
-			"@generics": ["src/generics/_exports"],
+			"@generics": ["unused_code/generics/_exports"],
 			"@pages": ["src/pages/_exports"],
+			"@graphql": ["src/graphql"],
+			"@types": ["src/types"],
 		},
 	},
-	"include": ["src"],
+	"include": ["src", "unused_code/generics"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

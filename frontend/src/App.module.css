@@ -1,0 +1,11 @@
+.backgroundImage {
+	margin-top: 80px;
+	width: 100%;
+	height: 300px;
+	position: absolute;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url('/background.webp');
+	z-index: -10,
+}

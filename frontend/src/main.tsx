@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import appConfig from '../appConfig';
 import App from './App';
+import './main.css';
 
 const client = new ApolloClient({
 	uri: appConfig.graphql.getUri(),

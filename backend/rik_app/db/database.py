@@ -5,7 +5,6 @@ from rik_app.utils.classutils import SingletonMeta
 from asyncpg.connection import Connection
 from asyncpg.pool import Pool
 from asyncpg import Record
-from dotmap import DotMap
 import asyncpg
 import json
 

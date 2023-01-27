@@ -20,8 +20,11 @@ specifiers:
   express: ^4.18.2
   graphql: ^16.6.0
   graphql-import-node: ^0.0.5
+  i18next: ^22.4.9
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-i18next: ^12.1.4
+  react-icons: ^4.7.1
   react-router-dom: ^6.6.1
   typescript: ^4.9.3
   validator: ^13.7.0
@@ -44,8 +47,11 @@ dependencies:
   express: 4.18.2
   graphql: 16.6.0
   graphql-import-node: 0.0.5_graphql@16.6.0
+  i18next: 22.4.9
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-i18next: 12.1.4_iakk3dtjhjpukdoa4oua5khgci
+  react-icons: 4.7.1_react@18.2.0
   react-router-dom: 6.6.1_biqbaboplfbrettd7655fr4n2y
   validator: 13.7.0
 
@@ -1573,6 +1579,12 @@ packages:
       react-is: 16.13.1
     dev: false
 
+  /html-parse-stringify/3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /http-errors/2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -1582,6 +1594,12 @@ packages:
       setprototypeof: 1.2.0
       statuses: 2.0.1
       toidentifier: 1.0.1
+    dev: false
+
+  /i18next/22.4.9:
+    resolution: {integrity: sha512-8gWMmUz460KJDQp/ob3MNUX84cVuDRY9PLFPnV8d+Qezz/6dkjxwOaH70xjrCNDO+JrUL25iXfAIN9wUkInNZw==}
+    dependencies:
+      '@babel/runtime': 7.20.7
     dev: false
 
   /iconv-lite/0.4.24:
@@ -1836,6 +1854,34 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-i18next/12.1.4_iakk3dtjhjpukdoa4oua5khgci:
+    resolution: {integrity: sha512-XQND7jYtgM7ht5PH3yIZljCRpAMTlH/zmngM9ZjToqa+0BR6xuu8c7QF0WIIOEjcMTB2S3iOfpN/xG/ZrAnO6g==}
+    peerDependencies:
+      i18next: '>= 19.0.0'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.20.7
+      html-parse-stringify: 3.0.1
+      i18next: 22.4.9
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-icons/4.7.1_react@18.2.0:
+    resolution: {integrity: sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:
@@ -2190,6 +2236,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /void-elements/3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /yallist/3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}

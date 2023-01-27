@@ -3,7 +3,7 @@
 const appConfig = {
 	graphql: {
 		host: 'localhost',
-		port: 8080,
+		port: 8000,
 		
 		getUri() {
 			const { host, port } = appConfig.graphql;

@@ -36,10 +36,6 @@ async def resolve_search_companies(_, __, pattern: str):
 # -------------------------------------------------------------------------------- #
 @query.field("getCompanyDetails")
 async def resolve_get_company_details(_, __, tin: str):
-    if len(tin) < 3:
-        return error_message("error.search-tin-too-short")
-    if len(tin) > 100:
-        return error_message("error.search-tin-too-long")
     person = tintools.get_person_from_tin(tin)
     if person != PersonType.JUDICIAL or tintools.is_partial_tin(tin):
         return error_message("error.invalid-search-tin")

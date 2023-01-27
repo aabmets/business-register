@@ -1,0 +1,8 @@
+.mainContent {
+	display: flex;
+	margin-top: 80px;
+	padding-top: 150px;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+}

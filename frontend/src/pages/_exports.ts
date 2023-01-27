@@ -1,9 +1,11 @@
 import MainPage from "./MainPage/MainPage";
-import ViewEntityPage from "./ViewEntityPage/ViewEntityPage";
-import UpdateEntityPage from "./UpdateEntityPage/UpdateEntityPage";
-import CreateEntityPage from "./CreateEntityPage/CreateEntityPage";
-
 export { MainPage };
-export { ViewEntityPage };
-export { UpdateEntityPage };
-export { CreateEntityPage };
+
+import ViewCompanyPage from "./ViewCompanyPage/ViewCompanyPage";
+export { ViewCompanyPage };
+
+import UpdateCompanyPage from "./UpdateCompanyPage/UpdateCompanyPage";
+export { UpdateCompanyPage };
+
+import CreateCompanyPage from "./CreateCompanyPage/CreateCompanyPage";
+export { CreateCompanyPage };

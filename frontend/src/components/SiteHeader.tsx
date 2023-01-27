@@ -1,37 +1,60 @@
 import { Button } from '@mantine/core';
-import { Link, useLocation, useNavigate  } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams  } from "react-router-dom";
 import styles from './SiteHeader.module.css';
 import logo from '/logo-est.svg';
 
 function SiteHeader(): JSX.Element {
+	const [searchParams] = useSearchParams();
+	const tin = searchParams.get('tin') || '';
 	const navigate = useNavigate();
 	const location = useLocation();
 	const path = location.pathname;
-
+	
 	function renderButton(path: string, label: string, toggle: boolean): JSX.Element {
-		const style = toggle && location.pathname === path ? styles.button__selected : styles.button;
+		const current = location.pathname === path;
+		const style = toggle && current ? styles.button__selected : styles.button;
+		const callback = () => current ? null : navigate(path);
 		return (
-			<Button variant="default" size='md' radius="xl" className={style} onClick={() => navigate(path)}>
-				<span className={styles.button__text}>{label}</span>
+			<Button 
+				size='md' 
+				radius="xl" 
+				variant="default" 
+				className={style}
+				onClick={callback}>
+					<span className={styles.button__text}>
+						{label}
+					</span>
 			</Button>
 		);
 	}
-	const firstOption = ['/', '/create'].includes(path);
-	const secondOption = ['/view', '/update'].includes(path);
+	
 	return (
 		<div className={styles.center}>
 			<div className={styles.header}>
 				<Link to='/'>
 					<img src={logo} alt='' className={styles.logo}/>
 				</Link>
-				<Button.Group>
-					{renderButton('/', 'AVALEHELE', false)}
-					{firstOption ? 
-						renderButton('/create', 'UUS OSAÜHING', true) 
-					: secondOption ?
-						renderButton('/update', 'MUUDA OSAKAPITALI', true)
-					: null}
-				</Button.Group>
+				{path === '/' ?
+					renderButton('/create', 'UUS OSAÜHING', true) 
+				: null}
+				{path === '/view' ?
+					<Button.Group>
+						{renderButton('/', 'TAGASI', false)}
+						{renderButton(`/update?tin=${tin}`, 'MUUDA OSAKAPITALI', true)}
+					</Button.Group>
+				: null}
+				{path === '/update' ?
+					<Button.Group>
+						{renderButton(`/view?tin=${tin}`, 'TAGASI', false)}
+						{renderButton('/update', 'MUUDA OSAKAPITALI', true)}
+					</Button.Group>
+				: null}
+				{path === '/create' ?
+					<Button.Group>
+						{renderButton('/', 'TAGASI', false)}
+						{renderButton('/create', 'UUS OSAÜHING', true)}
+					</Button.Group>
+				: null}
 			</div>
 		</div>
 	);
