@@ -1,11 +1,8 @@
-import CompanyDetailsCard from './CompanyDetailsCard';
-export { CompanyDetailsCard };
+import SearchCompaniesModal from './SearchCompaniesModal';
+export { SearchCompaniesModal };
 
-import SearchInput from './SearchInput';
-export { SearchInput };
-
-import SearchResultCard from './SearchResultCard';
-export { SearchResultCard };
+import SearchField from './SearchField';
+export { SearchField };
 
 import SiteHeader from './SiteHeader';
 export { SiteHeader };

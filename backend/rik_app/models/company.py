@@ -27,9 +27,10 @@ class Company(JudicialPerson):
     # ------------------------------------------------------------ #
     def to_dict(self) -> dict:
         copy = deepcopy(self)
-        copy.shareholders = [sh.dict(exclude={"person_type"}) for sh in self.shareholders]
+        exclude = {"person_type", "field_id"}
+        copy.shareholders = [sh.dict(exclude=exclude) for sh in self.shareholders]
         copy.founding_date = str(self.founding_date)
-        return copy.dict(exclude={"person_type"})
+        return copy.dict(exclude=exclude)
 
     # ------------------------------------------------------------ #
     def to_dotmap(self) -> DotMap:
@@ -52,7 +53,7 @@ class Company(JudicialPerson):
 
     # ------------------------------------------------------------ #
     @validator("founding_date", always=True)
-    def validate_founding_date(cls, f_date: date | str) -> date:
+    def validate_founding_date(cls, f_date: date | str | None) -> date:
         """
         This function validates that the founding date of a company is not in the
         future and not older than 30 days from the current date. If the founding date
@@ -60,6 +61,7 @@ class Company(JudicialPerson):
         If no founding date is provided, current date is used instead.
         Skips date validation, if it has been disabled.
 
+        :raises "date.empty-not-allowed": if no date is provided.
         :raises "date.invalid-format": if the date is a string and
             it cannot be converted into a date object.
         :raises "date.future-not-allowed": if the date is in the future.
@@ -71,7 +73,7 @@ class Company(JudicialPerson):
         if not cls.is_date_validation():
             return f_date
         if f_date is None:
-            return datetime.now().date()
+            raise ValueError("date.empty-not-allowed")
         if isinstance(f_date, str):
             try:
                 f_date = date.fromisoformat(f_date)

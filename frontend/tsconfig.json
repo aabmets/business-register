@@ -18,6 +18,8 @@
 		"baseUrl": ".",
 		"paths": {
 			"@components": ["src/components/_exports"],
+			"@context": ["src/context/_exports"],
+			"@utils": ["src/utils/_exports"],
 			"@pages": ["src/pages/_exports"],
 			"@graphql": ["src/graphql"],
 			"@types": ["src/types"],

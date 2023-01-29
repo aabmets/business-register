@@ -1,0 +1,39 @@
+.searchResultsText {
+	font-size: 1.2rem;
+	font-weight: 600;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: rgb(36, 36, 36);
+}
+.line {
+	width: 100%;
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 15px;
+}
+.foundItem {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.boldText {
+	color: #4A5465;
+	font-weight: 600;
+	font-size: 1.1rem;
+	min-width: 320px;
+	padding-right: 10px;
+	white-space: nowrap;
+	word-break: keep-all;
+}
+.regularText {
+	color: #4a4a4a;
+	font-weight: 350;
+	font-size: 1.1rem;
+}
+.shName {
+	width: 260px;
+	text-align: start;
+	white-space: nowrap;
+	padding-left: 5px;
+	padding-right: 5px;
+}

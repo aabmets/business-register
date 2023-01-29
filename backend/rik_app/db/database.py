@@ -120,8 +120,15 @@ class DatabaseSingleton(metaclass=SingletonMeta):
             return results[0] if results else None
 
     # ------------------------------------------------------------ #
-    async def does_company_exist(self, tin) -> bool:
+    async def does_company_name_exist(self, company: Company) -> bool:
+        async with self.__conn_pool.acquire() as conn:
+            query = "SELECT EXISTS(SELECT 1 FROM companies WHERE name = $1)"
+            results = await conn.fetch(query, company.name)
+            return results[0]["exists"]
+
+    # ------------------------------------------------------------ #
+    async def does_company_tin_exist(self, company: Company) -> bool:
         async with self.__conn_pool.acquire() as conn:
             query = "SELECT EXISTS(SELECT 1 FROM companies WHERE tin = $1)"
-            results = await conn.fetch(query, tin)
+            results = await conn.fetch(query, company.tin)
             return results[0]["exists"]

@@ -1,0 +1,28 @@
+.mainContent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.inputFields {
+	align-items: flex-start;
+	justify-content: center;
+	gap: 15px;
+	margin-bottom: 10px;
+}
+.nameInput {
+	width: 300px;
+}
+.tinInput {
+	width: 130px;
+}
+.equityInput {
+	width: 130px;
+}
+.actionIcon {
+	height: 36px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}

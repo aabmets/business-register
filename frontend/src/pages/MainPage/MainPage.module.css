@@ -1,10 +1,16 @@
 .mainContent {
-	margin-top: 80px;
-	padding-top: 50px;
 	display: flex;
 	justify-content: center;
 	position: absolute;
+	margin-top: 150px;
 	width: 100%;
+}
+.searchFieldTitle {
+	color: white;
+	font-size: 2.0rem;
+	font-weight: 600;
+	margin-bottom: 22px;
+	text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 50%);
 }
 .searchResultsText {
 	font-size: 1.3rem;

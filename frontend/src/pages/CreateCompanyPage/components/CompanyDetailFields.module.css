@@ -1,0 +1,13 @@
+.nameInput {
+	width: 100%;
+	min-width: 300px;
+}
+.tinInput {
+	min-width: 130px;
+}
+.equityInput {
+	min-width: 130px;
+}
+.datePickerInput {
+	min-width: 190px;
+}

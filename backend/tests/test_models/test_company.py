@@ -56,6 +56,7 @@ def test_company_founding_date_error(baseline_data: dict):
     future_not_allowed = datetime.now().date() + timedelta(days=1)
     too_far_past = datetime.now().date() - timedelta(days=31)
     tests = [
+        DotMap(founding_date=None, err_msg="date.empty-not-allowed"),
         DotMap(founding_date="ABCDEFG", err_msg="date.invalid-format"),
         DotMap(founding_date=future_not_allowed, err_msg="date.future-not-allowed"),
         DotMap(founding_date=too_far_past, err_msg="date.too-far-past"),

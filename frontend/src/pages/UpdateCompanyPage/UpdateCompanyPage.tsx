@@ -1,75 +1,100 @@
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Center, Stack, Paper } from '@mantine/core';
+import { useLazyQuery } from '@apollo/client';
+import { Button, Text } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useCompanyDetails } from '@context';
+import { GET_COMPANY_DETAILS } from '@graphql';
+import { useSubmitHandler } from './hooks/useSubmitHandler';
+import CompanyDetailFields from './components/CompanyDetailFields';
+import ShareholderFields from './components/ShareholderFields';
+import styles from './UpdateCompanyPage.module.css';
+import { 
+	CompanyDetailsInput, 
+	CompanyDetails, 
+	GetCompanyDetailsResponse,
+} from '@types';
+import { 
+	getBlankCompany, 
+	getInitCompany, 
+	getInitShareholder,
+} from '@utils';
 
-function UpdateEntityPage(): JSX.Element {
-		// const { loading, error, data } = useQuery(SEARCH_COMPANIES, {
-	// 	variables: { tin: "13461441" },
-	// });
-	// if (error) {
-	// 	console.log(error.message)
-	// } else {
-	// 	console.log(loading, data);
-	// }
-	// const UPDATE_COMPANY = gql`
-	// 	mutation UpdateCompany($data: CompanyDetailsInput!) {
-	// 		updateCompany(data: $data) {
-	// 			result
-	// 			errors {
-	// 				field_id
-	// 				message
-	// 			}
-	// 			data {
-	// 				name
-	// 				tin
-	// 				equity
-	// 				founding_date
-	// 				shareholders {
-	// 					name
-	// 					tin
-	// 					equity
-	// 					founder
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// `
-	// const [createCompany, { data, loading, error }] = useMutation(UPDATE_COMPANY);
-	// if (error) {
-	// 	console.log(error.message)
-	// } else {
-	// 	console.log(loading, data)
-	// }
-	// const details = { 
-	// 	name: "Asperon OÜ",
-	// 	tin: "16272114",
-	// 	equity: 3600,
-	// 	founding_date: "2023-01-16",
-	// 	field_id: 'company',
-	// 	shareholders: [
-	// 		{
-	// 			name: "Mattias Aabmets",
-	// 			tin: "38812132731",
-	// 			equity: 2500,
-	// 			field_id: 'shareholder_1'
-	// 		}, {
-	// 			name: "Somebody Else",
-	// 			tin: "42509072227",
-	// 			equity: 1000,
-	// 			field_id: 'shareholder_2'
-	// 		}, {
-	// 			name: "Third Person",
-	// 			tin: "60706060153",
-	// 			equity: 100,
-	// 			field_id: "shareholder_3"
-	// 		}
-	// 	]
-	// }
-	// <button onClick={() => createCompany(
-	// 	{ variables: {data: details}})}> Create Company 
-	// </button>
+
+function UpdateCompanyPage(): JSX.Element {
+	const submitHandler = useSubmitHandler();
+	const [searchParams] = useSearchParams();
+	const { companyDetails, setCompanyDetails } = useCompanyDetails();
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [getCompanyDetails] = useLazyQuery<GetCompanyDetailsResponse>(
+		GET_COMPANY_DETAILS, { variables: { tin: searchParams.get('tin') || '' }}
+	);
+	const form = useForm<CompanyDetailsInput>({
+		initialValues: getBlankCompany(),
+	})
+	
+	function updateFormData(company: CompanyDetails): void {
+		form.setValues(getInitCompany(company));
+		company.shareholders.forEach((item) => (
+			form.insertListItem('shareholders', 
+				getInitShareholder(item)
+			)
+		))
+	}
+
+	useEffect(() => {
+		if (companyDetails === null) {
+			getCompanyDetails()
+				.then((resp) => {
+					const apiResult = resp.data?.getCompanyDetails.result;
+					const apiError = resp.data?.getCompanyDetails.error;
+					const apiData = resp.data?.getCompanyDetails.data;
+					if (!apiResult && apiError) {
+						setErrorMessage(apiError);
+					} else if (apiResult && apiData) {
+						setCompanyDetails(apiData);
+						updateFormData(apiData);
+					}
+				})
+				.catch(() => null);
+		} else {
+			updateFormData(companyDetails);
+		}
+	}, [])
+
 	return (
-		<div>
-			UpdateEntityPage
+		<div style={{position: 'relative'}}>
+			<Center className={styles.mainContent}>
+				{errorMessage ? 
+					<Text className={styles.errorMsgStyle}> 
+						{errorMessage} 
+					</Text>
+				: null}
+				{companyDetails ?
+					<Stack spacing={0}>
+						<Text className={styles.updateCompanyTitle}>
+							Osakapitali muutmine
+						</Text>
+						<Paper p='lg' radius='sm' withBorder className={styles.updateCompanyCard}>
+							<CompanyDetailFields form={form}/>
+							<Center className={styles.marginLine__1}>
+								<Text className={styles.boldText}>
+									Osanikud
+								</Text>
+							</Center>
+							<ShareholderFields form={form}/>
+							<Center className={styles.marginLine__2}>
+								<Button color='red' onClick={() => submitHandler(form)}>
+									Muuda osakapitali
+								</Button>
+							</Center>
+						</Paper>
+					</Stack>
+				: null}
+			</Center>
 		</div>
 	);
 }
 
-export default UpdateEntityPage;
+export default UpdateCompanyPage;

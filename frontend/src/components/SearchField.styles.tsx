@@ -2,19 +2,10 @@ import { createStyles } from '@mantine/core';
 
 
 export const useStyles = createStyles(() => ({
-	searchFieldTitle: {
-		color: 'white',
-		fontSize: '2.0rem',
-		fontWeight: 600,
-		marginBottom: '22px',
-		textShadow: '0 0.2rem 0.4rem rgba(0, 0, 0, 50%)',
-	},
 	searchFieldGroup: {
 		display: 'flex', 
-		justifyContent: 'center', 
-		paddingBottom: '20px',
-		width: '50vw',
-		minWidth: '330px',
+		justifyContent: 'center',
+		minWidth: '400px',
 	},
 	searchInput: {
 		width: '100%',
@@ -40,7 +31,6 @@ export const useStyles = createStyles(() => ({
 		},
 	},
 	searchButton: {
-		display: 'block',
 		height: '40px',
 		borderRadius: 100,
 		borderTopLeftRadius: 0,

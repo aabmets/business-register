@@ -10,17 +10,17 @@
 		"start": "nodemon src/express.js"
 	},
 	"dependencies": {
-		"@apollo/client": "^3.7.3",
+		"@apollo/client": "^3.7.5",
 		"@babel/core": "^7.20.12",
 		"@emotion/react": "^11.10.5",
-		"@mantine/core": "^5.10.0",
-		"@mantine/dates": "^5.10.0",
-		"@mantine/form": "^5.10.0",
-		"@mantine/hooks": "^5.10.0",
-		"@mantine/modals": "^5.10.0",
-		"@mantine/notifications": "^5.10.0",
-		"@mantine/nprogress": "^5.10.0",
-		"axios": "^1.2.2",
+		"@mantine/core": "^5.10.2",
+		"@mantine/dates": "^5.10.2",
+		"@mantine/form": "^5.10.2",
+		"@mantine/hooks": "^5.10.2",
+		"@mantine/modals": "^5.10.2",
+		"@mantine/notifications": "^5.10.2",
+		"@mantine/nprogress": "^5.10.2",
+		"axios": "^1.2.5",
 		"dayjs": "^1.11.7",
 		"express": "^4.18.2",
 		"graphql": "^16.6.0",
@@ -31,16 +31,17 @@
 		"react-dom": "^18.2.0",
 		"react-i18next": "^12.1.4",
 		"react-icons": "^4.7.1",
-		"react-router-dom": "^6.6.1",
+		"react-router-dom": "^6.8.0",
+		"uuid": "^9.0.0",
 		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.18",
-		"@types/react": "^18.0.26",
-		"@types/react-dom": "^18.0.9",
-		"@vitejs/plugin-react-swc": "^3.0.0",
-		"typescript": "^4.9.3",
-		"vite": "^4.0.0",
-		"vite-tsconfig-paths": "^4.0.3"
+		"@types/react": "^18.0.27",
+		"@types/react-dom": "^18.0.10",
+		"@vitejs/plugin-react-swc": "^3.0.1",
+		"typescript": "^4.9.4",
+		"vite": "^4.0.4",
+		"vite-tsconfig-paths": "^4.0.5"
 	}
 }

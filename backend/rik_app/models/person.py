@@ -15,6 +15,7 @@ class Person(BaseModel):
     name: str = None
     tin: str = None
     equity: int = None
+    field_id: str = None
 
     # ------------------------------------------------------------ #
     @validator('*', pre=True, always=True)

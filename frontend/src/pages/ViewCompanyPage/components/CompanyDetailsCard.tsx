@@ -3,6 +3,7 @@ import { Text, Card, Flex } from '@mantine/core';
 import { CompanyDetails } from '@types';
 import dayjs from 'dayjs';
 
+
 interface CompanyDetailsCardProps {
 	detailsData: CompanyDetails;
 }
@@ -17,7 +18,7 @@ function CompanyDetailsCard(props: CompanyDetailsCardProps): JSX.Element {
 				<div className={styles.regularText}>
 					<Text>Ettevõtte nimi</Text>
 					<Text>Registrikood</Text>
-					<Text>Kogukapital</Text>
+					<Text>Osakapital</Text>
 					<Text>Asutamise kuupäev</Text>
 				</div>
 				<div className={styles.boldText}>
@@ -31,7 +32,9 @@ function CompanyDetailsCard(props: CompanyDetailsCardProps): JSX.Element {
 				<Text className={styles.shPct}>Osalus</Text>
 				<span className={styles.space}/>
 				<Text className={styles.shEquity}>Osamaks</Text>
+				<span className={styles.space}/>
 				<Text className={styles.shName}>Nimi</Text>
+				<span className={styles.space}/>
 				<Text className={styles.shTin}>Isikukood</Text>
 				<Text className={styles.shFounder}>Asutaja</Text>
 				<Text className={styles.shType}>Tüüp</Text>
@@ -53,6 +56,7 @@ function CompanyDetailsCard(props: CompanyDetailsCardProps): JSX.Element {
 						</Text>
 					)}
 				</Flex>
+				<span className={styles.space}/>
 				<Flex direction='column' className={styles.shName}>
 					{shareholders.map((sh, index) => 
 						<Text key={'name-' + index} className={styles.boldText}>
@@ -60,6 +64,7 @@ function CompanyDetailsCard(props: CompanyDetailsCardProps): JSX.Element {
 						</Text>
 					)}
 				</Flex>
+				<span className={styles.space}/>
 				<Flex direction='column' className={styles.shTin}>
 					{shareholders.map((sh, index) => 
 						<Text key={'tin-' + index} className={styles.regularText}>

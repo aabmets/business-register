@@ -1,0 +1,50 @@
+.mainContent {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	margin-top: 150px;
+	width: 100%;
+}
+.createCompanyTitle {
+	color: white;
+	font-size: 2.0rem;
+	font-weight: 600;
+	margin-bottom: 22px;
+	text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 50%);
+}
+.createCompanyCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 50vw;
+	min-width: 900px;
+	box-shadow: 0 0.3rem 0.4rem 0 #c2c0c2;
+	padding-top: 25px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 25px;
+	min-height: 200px;
+}
+.line {
+	width: 100%;
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 5px;
+}
+.marginLine__1 {
+	width: 100%;
+	border-bottom: 1px solid #dedede;
+	margin-bottom: 15px;
+	padding-top: 30px;
+}
+.marginLine__2 {
+	width: 100%;
+	border-top: 1px solid #dedede;
+	padding-top: 25px;
+	margin-top: 15px;
+}
+.boldText {
+	color: #4A5465;
+	font-weight: 600;
+	font-size: 1.1rem;
+}

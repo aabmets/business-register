@@ -39,7 +39,7 @@ function SiteHeader(): JSX.Element {
 				: null}
 				{path === '/view' ?
 					<Button.Group>
-						{renderButton('/', 'TAGASI', false)}
+						{renderButton('/', 'AVALEHELE', false)}
 						{renderButton(`/update?tin=${tin}`, 'MUUDA OSAKAPITALI', true)}
 					</Button.Group>
 				: null}
@@ -51,7 +51,7 @@ function SiteHeader(): JSX.Element {
 				: null}
 				{path === '/create' ?
 					<Button.Group>
-						{renderButton('/', 'TAGASI', false)}
+						{renderButton('/', 'AVALEHELE', false)}
 						{renderButton('/create', 'UUS OSAÜHING', true)}
 					</Button.Group>
 				: null}

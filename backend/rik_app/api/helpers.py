@@ -36,20 +36,20 @@ def error_message(message: str) -> dict:
 
 # -------------------------------------------------------------------------------- #
 def process_incoming_data(data: dict, errors: ErrorsList, validate_date=True, set_founders=True) -> Company | None:
-    valid_shds = []
+    parsed_shds = []
     for sh in data.pop("shareholders", []):
-        field_id = sh.pop("field_id", None)  # GraphQL schema asserts field_id
+        field_id = sh.get("field_id", None)  # GraphQL schema asserts field_id
         try:
             if set_founders:
                 sh["founder"] = True
-            valid_sh = Shareholder(**sh)  # this raises validation errors
-            valid_shds.append(valid_sh)
+            parsed_sh = Shareholder(**sh)  # this raises validation errors
+            parsed_shds.append(parsed_sh)
         except ValidationError as ex:
             for e in ex.errors():
                 errors(field_id, e["msg"])
-    data["shareholders"] = valid_shds
+    data["shareholders"] = parsed_shds
 
-    field_id = data.pop("field_id", None)  # GraphQL schema asserts field_id
+    field_id = data.get("field_id", None)  # GraphQL schema asserts field_id
     try:
         Company.set_date_validation(validate_date)
         valid_company = Company(**data)  # this raises validation errors

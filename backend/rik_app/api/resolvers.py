@@ -53,7 +53,7 @@ async def resolve_get_company_details(_, __, tin: str):
 @mutation.field("createCompany")
 async def resolve_create_company(_, __, data: dict):
     errors = ErrorsList()
-    valid_company = process_incoming_data(
+    parsed_company = process_incoming_data(
         data=data,
         errors=errors,
         validate_date=True,
@@ -61,12 +61,23 @@ async def resolve_create_company(_, __, data: dict):
     )
     if errors:
         return errors.to_dict()
+    field_id = parsed_company.field_id
 
     db = DatabaseSingleton()
-    await db.insert_company(valid_company)
+    exists = await db.does_company_name_exist(parsed_company)
+    if exists:
+        errors(field_id, "name.company-already-exists")
+        return errors.to_dict()
+
+    exists = await db.does_company_tin_exist(parsed_company)
+    if exists:
+        errors(field_id, "tin.company-already-exists")
+        return errors.to_dict()
+
+    await db.insert_company(parsed_company)
     return {
         "result": True,
-        "data": valid_company.to_dict()
+        "data": parsed_company.to_dict()
     }
 
 
@@ -74,7 +85,7 @@ async def resolve_create_company(_, __, data: dict):
 @mutation.field("updateCompany")
 async def resolve_update_company(_, __, data: dict):
     errors = ErrorsList()
-    valid_company = process_incoming_data(
+    parsed_company = process_incoming_data(
         data=data,
         errors=errors,
         validate_date=False,
@@ -82,43 +93,45 @@ async def resolve_update_company(_, __, data: dict):
     )
     if errors:
         return errors.to_dict()
+    field_id = parsed_company.field_id
 
     db = DatabaseSingleton()
-    result = await db.get_company_details_by_tin(valid_company.tin)
+    result = await db.get_company_details_by_tin(parsed_company.tin)
     if not result:
-        errors("company", "error.invalid-update-target")
+        errors(field_id, "name.company-doesnt-exist")
         return errors.to_dict()
 
     db_company = DotMap(dict(result))
-    if valid_company.equity <= db_company.equity:
-        errors("company", "error.equity-must-increase")
+    if parsed_company.equity <= db_company.equity:
+        errors(field_id, "equity.equity-must-increase")
         return errors.to_dict()
 
-    valid_shds = valid_company.shareholders
+    parsed_shds = parsed_company.shareholders
     db_shds = json.loads(db_company.shareholders)
     for db_sh in db_shds:
         db_sh = DotMap(db_sh)
-        matched_sh = list(filter(lambda sh: sh.tin == db_sh.tin, valid_shds))
-        if not matched_sh:
-            errors("shareholder", "error.shareholder-missing")
+        search_result = list(filter(lambda sh: sh.tin == db_sh.tin, parsed_shds))
+        if not search_result:
+            errors(field_id, "shareholders.missing-shareholder")
             break
-        matched_sh = matched_sh[0]
-        if matched_sh.name != db_sh.name:
-            errors("shareholder", "error.shareholder-name-mismatch")
+        found_sh = search_result[0]
+        if found_sh.name != db_sh.name:
+            errors(found_sh.field_id, "name.shareholder-name-mismatch")
             break
-        elif matched_sh.equity < db_sh.equity:
-            errors("shareholder", "error.shareholder-equity-decrease")
+        elif found_sh.equity < db_sh.equity:
+            errors(found_sh.field_id, "equity.shareholder-equity-decrease")
             break
         else:
-            matched_sh.founder = db_sh.founder
+            found_sh.founder = db_sh.founder
     if errors:
         return errors.to_dict()
 
-    for valid_sh in valid_shds:
-        if valid_sh.founder is None:
-            valid_sh.founder = False
-    await db.update_company(valid_company)
+    for parsed_sh in parsed_shds:
+        if parsed_sh.founder is None:
+            parsed_sh.founder = False
+
+    await db.update_company(parsed_company)
     return {
         "result": True,
-        "data": valid_company.to_dict()
+        "data": parsed_company.to_dict()
     }

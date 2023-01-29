@@ -1,30 +1,57 @@
-import { Fragment } from 'react';
-import { Center } from '@mantine/core';
-import { useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import { Center, Text, Stack } from '@mantine/core';
 import { useSearchParams } from 'react-router-dom';
-import { CompanyDetailsCard } from '@components';
+import { useLazyQuery } from '@apollo/client';
+import { useCompanyDetails } from '@context';
 import { GET_COMPANY_DETAILS } from '@graphql';
-import { CompanyDetails } from '@types';
+import { GetCompanyDetailsResponse } from '@types';
+import CompanyDetailsCard from './components/CompanyDetailsCard';
 import styles from './ViewCompanyPage.module.css';
+
 
 function ViewEntityPage(): JSX.Element {
 	const [searchParams] = useSearchParams();
-	const { data } = useQuery(GET_COMPANY_DETAILS, 
-		{ variables: { tin: searchParams.get('tin') || '' }}
+	const { companyDetails, setCompanyDetails } = useCompanyDetails();
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [getCompanyDetails] = useLazyQuery<GetCompanyDetailsResponse>(
+		GET_COMPANY_DETAILS, { variables: { tin: searchParams.get('tin') || '' }}
 	);
-	const detailsResult: string | undefined = data?.getCompanyDetails.result
-	const detailsData: CompanyDetails | undefined = data?.getCompanyDetails.data
+
+	useEffect(() => {
+		if (companyDetails === null) {
+			getCompanyDetails()
+				.then((resp) => {
+					const apiResult = resp.data?.getCompanyDetails.result;
+					const apiError = resp.data?.getCompanyDetails.error;
+					const apiData = resp.data?.getCompanyDetails.data;
+					if (!apiResult && apiError) {
+						setErrorMessage(apiError);
+					} else if (apiResult && apiData) {
+						setCompanyDetails(apiData);
+					}
+				})
+				.catch(() => null);
+		}
+	}, [])
 	
 	return (
-		<Fragment>
-			{detailsResult && detailsData ? 
-				<div style={{position: 'relative'}}>
-					<Center className={styles.mainContent}>
-						<CompanyDetailsCard detailsData={detailsData}/>
-					</Center>
-				</div>
-			: null}
-		</Fragment>
+		<div style={{position: 'relative'}}>
+			<Center className={styles.mainContent}>
+				{errorMessage ? 
+					<Text className={styles.errorMsgStyle}> 
+						{errorMessage} 
+					</Text>
+				: null}
+				{companyDetails ?
+					<Stack spacing={0}>
+						<Text className={styles.viewCompanyTitle}>
+							Ettevõtte ülevaade
+						</Text>
+						<CompanyDetailsCard detailsData={companyDetails}/>
+					</Stack>
+				: null}
+			</Center>
+		</div>
 	);
 }
 

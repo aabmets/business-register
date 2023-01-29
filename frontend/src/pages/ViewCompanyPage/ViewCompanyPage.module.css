@@ -1,8 +1,19 @@
 .mainContent {
 	display: flex;
-	margin-top: 80px;
-	padding-top: 150px;
+	margin-top: 150px;
 	justify-content: center;
 	position: absolute;
 	width: 100%;
+}
+.viewCompanyTitle {
+	color: white;
+	font-size: 2.0rem;
+	font-weight: 600;
+	margin-bottom: 22px;
+	text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 50%);
+}
+.errorMsgStyle {
+	font-size: 2rem;
+	font-weight: 600;
+	color: white;
 }
