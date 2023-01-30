@@ -79,8 +79,8 @@ def test_np_tin_errors():
         DotMap(tin="6110408952", err_msg="tin.not-judicial-type"),
         DotMap(tin="36272114", err_msg="tin.invalid-prefix-data"),
         DotMap(tin="96272114", err_msg="tin.invalid-prefix-data"),
-        DotMap(tin="16272110", err_msg="tin.invalid-checksum"),
-        DotMap(tin="16272118", err_msg="tin.invalid-checksum"),
+        DotMap(tin="16272110", err_msg="tin.invalid-judicial-checksum"),
+        DotMap(tin="16272118", err_msg="tin.invalid-judicial-checksum"),
     ]
     testutils.assert_failure(tests, JudicialPerson, name="Asperon OÜ", equity=1)
 

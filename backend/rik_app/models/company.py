@@ -87,13 +87,8 @@ class Company(JudicialPerson):
         return f_date
 
     # ------------------------------------------------------------ #
-    @validator("equity", pre=True, always=True)
-    def inject_equity(cls, equity: int) -> int:
-        return equity  # for shareholders validation
-
-    # ------------------------------------------------------------ #
-    @validator("shareholders", always=True)
-    def validate_shareholders(cls, shds: Shareholders, values: dict) -> Shareholders:
+    @root_validator(pre=True, skip_on_failure=False)
+    def validate_company_shareholders(cls, values: dict) -> dict:
         """
         This function validates that the equities of the shareholders
         of a company are equal to the equity of the company.
@@ -104,33 +99,37 @@ class Company(JudicialPerson):
             contains persons with identical TIN-s.
         :raises "shareholders.equity-mismatch": if the equities of the
             shareholders do not equal the equity of the company.
-        :param shds: List of shareholders.
-        :param values: Dict of previously validated fields.
+        :param values: Dict of all model fields.
         :return: List of shareholders.
         """
+        shds: Shareholders = values.get("shareholders")
         if not shds:
             raise TypeError("shareholders.empty-not-allowed")
         tins = [sh.tin for sh in shds]
         if len(tins) != len(set(tins)):
             raise ValueError("shareholders.duplicates-not-allowed")
+        if values.get("tin") in tins:
+            raise ValueError("shareholders.self-company-not-allowed")
+        names = [sh.name for sh in shds]
+        if values.get("name") in names:
+            raise ValueError("shareholders.self-company-not-allowed")
         shds_equity = sum([sh.equity for sh in shds])
         company_equity = values.get('equity', 0)
         if company_equity != shds_equity:
             raise ValueError("shareholders.equity-mismatch")
-        return shds
+        return values
 
     # ------------------------------------------------------------ #
-    @root_validator()
-    def validate_company_equity(cls, values: dict) -> dict:
+    @validator("equity", always=True)
+    def validate_company_equity(cls, equity: int) -> int:
         """
         This function extends the base equity validation by validating
         that the equity of a Company is at least 2 500 units.
 
-        :raises "equity.too-small": if equity is less than 2 500.
-        :param values: Dict of all previously validated fields.
+        :raises "equity.company-too-small": if equity is less than 2500.
+        :param equity: Company equity, integer.
         :return: Company equity, unmodified.
         """
-        equity = values.get("equity")
-        if isinstance(equity, int) and equity < 2500:
+        if equity < 2500:
             raise ValueError("equity.company-too-small")
-        return values
+        return equity

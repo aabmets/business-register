@@ -75,8 +75,8 @@ def test_np_tin_errors():
         DotMap(tin="1774684", err_msg="tin.not-natural-type"),
         DotMap(tin="91908094712", err_msg="tin.invalid-date-data"),
         DotMap(tin="51961614712", err_msg="tin.invalid-date-data"),
-        DotMap(tin="51908095552", err_msg="tin.invalid-checksum"),
-        DotMap(tin="51908094718", err_msg="tin.invalid-checksum"),
+        DotMap(tin="51908095552", err_msg="tin.invalid-natural-checksum"),
+        DotMap(tin="51908094718", err_msg="tin.invalid-natural-checksum"),
     ]
     testutils.assert_failure(tests, NaturalPerson, name="ABC DEF", equity=1)
 

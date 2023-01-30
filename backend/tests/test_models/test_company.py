@@ -95,6 +95,24 @@ def test_company_shareholders_duplicates(baseline_data: dict):
 
 
 # -------------------------------------------------------------------------------- #
+def test_company_self_as_shareholder_name(baseline_data: dict):
+    sh = Shareholder(name="Asperon OÜ", tin="12519014", equity=3000)
+    baseline_data["shareholders"].append(sh)
+    today = datetime.now().date()
+    tests = [DotMap(founding_date=today, err_msg="shareholders.self-company-not-allowed")]
+    testutils.assert_failure(tests, Company, **baseline_data)
+
+
+# -------------------------------------------------------------------------------- #
+def test_company_self_as_shareholder_tin(baseline_data: dict):
+    sh = Shareholder(name="Antwerpen OÜ", tin="16272114", equity=3000)
+    baseline_data["shareholders"].append(sh)
+    today = datetime.now().date()
+    tests = [DotMap(founding_date=today, err_msg="shareholders.self-company-not-allowed")]
+    testutils.assert_failure(tests, Company, **baseline_data)
+
+
+# -------------------------------------------------------------------------------- #
 def test_company_shareholders_equity_mismatch(baseline_data: dict):
     sh = Shareholder(name="FAI LURE", tin="32612095751", equity=1)
     baseline_data["shareholders"].append(sh)
@@ -111,7 +129,7 @@ def test_company_equity_too_small(baseline_data: dict):
     baseline_data["shareholders"] = [sh]
     baseline_data["equity"] = 2499
 
-    tests = [DotMap(founding_date=today, err_msg="equity.too-small")]
+    tests = [DotMap(founding_date=today, err_msg="equity.company-too-small")]
     testutils.assert_failure(tests, Company, **baseline_data)
 
 
