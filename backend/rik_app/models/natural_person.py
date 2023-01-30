@@ -31,6 +31,7 @@ class NaturalPerson(Person):
         the name is returned to the caller.
 
         :raises "name.not-natural-type": if the name contains company identifiers.
+        :raises "name.invalid-char-natural": if the name contains invalid characters.
         :raises "name.not-full-natural": if the name does not have a surname.
         :param name: NaturalPersons name.
         :return: NaturalPersons name, optionally modified.
@@ -54,7 +55,7 @@ class NaturalPerson(Person):
 
         :raises "tin.not-natural-type": if TIN has incorrect length.
         :raises "tin.invalid-date-data": if TIN date field is invalid.
-        :raises "tin.invalid-checksum": if TIN checksum is invalid.
+        :raises "tin.invalid-natural-checksum": if TIN checksum is invalid.
         :param full_tin: NaturalPersons TIN.
         :return: NaturalPersons TIN, unmodified.
         """
@@ -64,5 +65,5 @@ class NaturalPerson(Person):
         if not tintools.validate_tin_date(full_tin):
             raise ValueError("tin.invalid-date-data")
         if not tintools.validate_tin_checksum(full_tin):
-            raise ValueError("tin.invalid-checksum")
+            raise ValueError("tin.invalid-natural-checksum")
         return full_tin

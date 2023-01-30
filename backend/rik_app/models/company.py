@@ -132,5 +132,5 @@ class Company(JudicialPerson):
         """
         equity = values.get("equity")
         if isinstance(equity, int) and equity < 2500:
-            raise ValueError("equity.too-small")
+            raise ValueError("equity.company-too-small")
         return values

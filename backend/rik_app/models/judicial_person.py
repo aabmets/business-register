@@ -48,10 +48,8 @@ class JudicialPerson(Person):
         if not nametools.is_valid_id_value(name):
             raise ValueError("name.invalid-id-value")
         if not nametools.is_valid_id_position(name):
-            print("bad name: " + name)
             raise ValueError("name.invalid-id-position")
         if not nametools.is_valid_name(name, PersonType.JUDICIAL):
-            print("invalid name: " + name)
             raise ValueError("name.invalid-char-judicial")
         return name
 
@@ -64,7 +62,7 @@ class JudicialPerson(Person):
 
         :raises "tin.not-judicial-type": if TIN has incorrect length.
         :raises "tin.invalid-prefix-data": if TIN prefix field is invalid.
-        :raises "tin.judicial-bad-crc": if TIN checksum is invalid.
+        :raises "tin.invalid-judicial-checksum": if TIN checksum is invalid.
         :param full_tin: JudicialPersons TIN.
         :return: JudicialPersons TIN, unmodified.
         """
@@ -74,5 +72,5 @@ class JudicialPerson(Person):
         if not tintools.validate_tin_prefix(full_tin):
             raise ValueError("tin.invalid-prefix-data")
         if not tintools.validate_tin_checksum(full_tin):
-            raise ValueError("tin.invalid-checksum")
+            raise ValueError("tin.invalid-judicial-checksum")
         return full_tin
