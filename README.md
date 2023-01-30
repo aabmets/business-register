@@ -3,8 +3,9 @@
 ## Description
 A project for my portfolio which showcases the use of GraphQL for communication between a Vite + React frontend and a Starlette + PostgreSQL backend. 
 The backend server source code has **2348** lines of code, where the most important source files are covered **100%** by tests (**~80%** total). 
-The frontend source code consists of **2116** lines of code, which have been tested through exploratory testing.
-Altogether, the project consists of almost **4500** lines of source code.
+The frontend source code consists of **2116** lines of code, which have been tested through exploratory testing. 
+Altogether, the project consists of almost **4500** lines of source code. 
+The project took about four workweeks to complete. 
 
 ## How to run
 
