@@ -1,6 +1,5 @@
 import { MantineForm } from "@types";
 import { DatePicker } from '@mantine/dates';
-import { TbCurrencyEuro } from 'react-icons/tb';
 import { TextInput, NumberInput, Flex } from '@mantine/core';
 import styles from './CompanyDetailFields.module.css';
 import 'dayjs/locale/et';
@@ -42,7 +41,7 @@ function CompanyDetailFields({ form }: FormProps): JSX.Element {
 				maxLength={5}
 				withAsterisk
 				hideControls
-				icon={<TbCurrencyEuro size={20} />}
+				icon='€'
 				{...form.getInputProps('equity')}
 				sx={{'.mantine-NumberInput-error': {
 					whiteSpace: 'nowrap',

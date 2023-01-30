@@ -4,7 +4,7 @@ import { getBlankShareholder } from '@utils';
 import { SearchCompaniesModal } from '@components';
 import { Button, ActionIcon, Space } from '@mantine/core';
 import { TextInput, NumberInput, Flex } from '@mantine/core';
-import { TbCurrencyEuro, TbTrash } from 'react-icons/tb';
+import { HiOutlineTrash } from 'react-icons/hi';
 import styles from './ShareholderFields.module.css';
 
 
@@ -69,7 +69,7 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 						maxLength={5}
 						withAsterisk
 						hideControls
-						icon={<TbCurrencyEuro size={20} />}
+						icon='€'
 						{...form.getInputProps(`shareholders.${index}.equity`)}
 						sx={{'.mantine-NumberInput-error': {
 							whiteSpace: 'nowrap',
@@ -82,7 +82,7 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 							disabled={isSingle && index === 0}
 							variant='light'
 							color='red'>
-								<TbTrash size={18} />
+								<HiOutlineTrash size={18} />
 						</ActionIcon>
 					</div>
 				</Flex>
