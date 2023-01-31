@@ -1,16 +1,11 @@
-import { notifyError } from './alertUtils';
-import { notifySuccess } from "./alertUtils";
-export { notifyError };
-export { notifySuccess };
-
-import { getUniqueErrors } from "./errUtils";
-import { setCompanyError } from "./errUtils";
-import { setShareholderErrors } from "./errUtils";
-import { showSpecialError } from "./errUtils";
+import { getUniqueErrors } from "./errorUtils";
+import { getSpecialError } from "./errorUtils";
+import { setCompanyError } from "./errorUtils";
+import { setShareholderErrors } from "./errorUtils";
 export { getUniqueErrors };
+export { getSpecialError };
 export { setCompanyError };
 export { setShareholderErrors };
-export { showSpecialError };
 
 import { getBlankShareholder } from "./formUtils";
 import { getInitShareholder } from "./formUtils";

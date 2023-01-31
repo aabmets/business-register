@@ -1,4 +1,5 @@
 import { useCompanyDetails } from '@context';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
 import { Card, Text, Flex } from '@mantine/core';
 import styles from './SearchResultCard.module.css';
@@ -11,6 +12,7 @@ interface SearchResultCardProps {
 
 function SearchResultCard({ name, tin }: SearchResultCardProps): JSX.Element {
 	const { companyDetails, setCompanyDetails } = useCompanyDetails();
+	const { t } = useTranslation(['pages']);
 	const navigate = useNavigate();
 
 	function onClickHandler() {
@@ -27,7 +29,7 @@ function SearchResultCard({ name, tin }: SearchResultCardProps): JSX.Element {
 			</Text>
 			<Flex justify="flex-start" align="center" direction="row">
 				<div className={styles.companyTin}>
-					Registrikood
+					{t("main.reg-tin")}
 				</div>
 				<div className={styles.tinCode}>
 					{tin}

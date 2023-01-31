@@ -5,6 +5,7 @@ import {
 	OutgoingCompanyDetails,
 } from '@types';
 
+
 export function convertOutgoingData(company: CompanyDetailsInput): OutgoingCompanyDetails {
 	const name = company.name;
 	const tin = company.tin;

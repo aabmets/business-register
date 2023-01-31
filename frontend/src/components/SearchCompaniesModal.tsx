@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { randomId } from '@mantine/hooks';
 import { useLazyQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
 import { Button, Stack, Modal } from '@mantine/core';
 import { Text, Center, ModalProps } from '@mantine/core';
 import { MantineForm, CompanyOverview } from "@types";
 import { SearchCompaniesResponse } from '@types';
+import { useCompanyDetails } from '@context';
 import { SEARCH_COMPANIES } from '@graphql';
 import SearchField from './SearchField';
 import styles from './SearchCompaniesModal.module.css';
@@ -17,24 +19,28 @@ interface SearchCompaniesModalProps {
 }
 
 function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
+	const { t } = useTranslation('common');
 	const { form, opened, closeModal } = props;
+	const { companyDetails } = useCompanyDetails();
 	const inputRef = useRef<HTMLInputElement | null>(null);
-	const [searchCompanies] = useLazyQuery<SearchCompaniesResponse>(SEARCH_COMPANIES, 
-		{ variables: { pattern: inputRef.current?.value || '' }}
+	const [searchCompanies] = useLazyQuery<SearchCompaniesResponse>(
+		SEARCH_COMPANIES, { variables: { pattern: inputRef.current?.value || '' }}
 	);
-	const [apiData, setApiData] = useState<CompanyOverview[] | null | undefined>();
-	const [apiResult, setApiResult] = useState<boolean | null | undefined>();
-	const [apiError, setApiError] = useState<string | null | undefined>();
+	const [data, setData] = useState<CompanyOverview[] | null | undefined>();
+	const [error, setError] = useState<string | null | undefined>();
 
 	function executeSearch() {
 		searchCompanies()
 			.then((resp) => {
-				const result = resp.data?.searchCompanies;
-				if (result) {
-					setApiData(result.data);
-					setApiResult(result.result);
-					setApiError(result.error);
+				const gql = resp.data?.searchCompanies;
+				let companies = null;
+				if (gql?.result && gql?.data) {
+					companies = gql.data.filter((entry) => (
+						entry.tin !== companyDetails?.tin
+					));
 				}
+				setError(gql?.error);
+				setData(companies);
 			})
 			.catch(() => null);
 	}
@@ -46,8 +52,8 @@ function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
 			equity: null, 
 			name: name, 
 		})
-		setApiData((prevState) => {
-			const index = apiData?.findIndex((item) => (item.name === name));
+		setData((prevState) => {
+			const index = data?.findIndex((item) => (item.name === name));
 			if (prevState && index !== undefined) {
 				const copy = [...prevState];
 				copy.splice(index, 1);
@@ -62,7 +68,7 @@ function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
 		transitionDuration: 400,
 		exitTransitionDuration: 400,
 		transitionTimingFunction: "ease",
-		title: "Ettevõtja osanikuks lisamine",
+		title: t("search.modal-title"),
 		onClose: closeModal,
 		opened: opened,
 		sx: {
@@ -73,7 +79,7 @@ function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
 				marginTop: '100px',
 			},
 			'.mantine-Modal-body': {
-				paddingBottom: '10px',
+				minHeight: '45px',
 			}
 		},
 	} satisfies ModalProps;
@@ -81,21 +87,22 @@ function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
 	return (
 		<Modal {...modalProps}>
 			<SearchField inputRef={inputRef} callback={executeSearch}/>
-			{apiData || apiError ?
-				<Center>
+			{error ?
+				<Center className={styles.resultsNotFound}>
 					<Text className={styles.searchResultsText}>
-						{apiData ?
-							<span>{`Otsingu tulemused (${apiData.length})`}</span>
-						: apiError ?
-							<span>{apiError}</span>
-						: null}
+						{t("search.modal-no-results")}
 					</Text>
 				</Center>
 			: null}
-			{apiResult && apiData ?
+			{data ?
 				<Stack spacing={0}>
+					<Center className={styles.resultsFound}>
+						<Text className={styles.searchResultsText}>
+							{`${t("search.modal-results")} (${data.length})`}
+						</Text>
+					</Center>
 					<div className={styles.line}/>
-					{apiData.map((company) => (
+					{data.map((company) => (
 						<div key={company.name} className={styles.foundItem}>
 							<Text className={styles.boldText}>
 								{company.name}
@@ -105,7 +112,7 @@ function SearchCompaniesModal(props: SearchCompaniesModalProps): JSX.Element {
 								color="cyan" 
 								variant="light" 
 								onClick={() => addShareholder(company.name, company.tin)}>
-									Lisa osanikuks
+									{t("search.modal-add-sh")}
 							</Button>
 						</div>
 					))}

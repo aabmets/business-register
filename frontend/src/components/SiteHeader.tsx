@@ -1,9 +1,12 @@
 import { Button } from '@mantine/core';
-import { Link, useLocation, useNavigate, useSearchParams  } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import styles from './SiteHeader.module.css';
 import logo from '/logo-est.svg';
 
 function SiteHeader(): JSX.Element {
+	const { t } = useTranslation('common');
 	const [searchParams] = useSearchParams();
 	const tin = searchParams.get('tin') || '';
 	const navigate = useNavigate();
@@ -35,24 +38,24 @@ function SiteHeader(): JSX.Element {
 					<img src={logo} alt='' className={styles.logo}/>
 				</Link>
 				{path === '/' ?
-					renderButton('/create', 'UUS OSAÜHING', true) 
+					renderButton('/create', t('header.new-company'), true) 
 				: null}
 				{path === '/view' ?
 					<Button.Group>
-						{renderButton('/', 'AVALEHELE', false)}
-						{renderButton(`/update?tin=${tin}`, 'MUUDA OSAKAPITALI', true)}
+						{renderButton('/', t('header.goto-main-page'), false)}
+						{renderButton(`/update?tin=${tin}`, t('header.change-equity'), true)}
 					</Button.Group>
 				: null}
 				{path === '/update' ?
 					<Button.Group>
-						{renderButton(`/view?tin=${tin}`, 'TAGASI', false)}
-						{renderButton('/update', 'MUUDA OSAKAPITALI', true)}
+						{renderButton(`/view?tin=${tin}`, t('header.back'), false)}
+						{renderButton('/update', t('header.change-equity'), true)}
 					</Button.Group>
 				: null}
 				{path === '/create' ?
 					<Button.Group>
-						{renderButton('/', 'AVALEHELE', false)}
-						{renderButton('/create', 'UUS OSAÜHING', true)}
+						{renderButton('/', t('header.goto-main-page'), false)}
+						{renderButton('/create', t('header.new-company'), true)}
 					</Button.Group>
 				: null}
 			</div>

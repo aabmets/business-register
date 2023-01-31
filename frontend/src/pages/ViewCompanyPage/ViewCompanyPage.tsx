@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Center, Text, Stack } from '@mantine/core';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
+import { Center, Text, Stack, Loader } from '@mantine/core';
 import { useCompanyDetails } from '@context';
 import { GET_COMPANY_DETAILS } from '@graphql';
 import { GetCompanyDetailsResponse } from '@types';
@@ -9,11 +10,11 @@ import CompanyDetailsCard from './components/CompanyDetailsCard';
 import styles from './ViewCompanyPage.module.css';
 
 
-function ViewEntityPage(): JSX.Element {
+function ViewCompanyPage(): JSX.Element {
+	const { t } = useTranslation('pages');
 	const [searchParams] = useSearchParams();
 	const { companyDetails, setCompanyDetails } = useCompanyDetails();
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [getCompanyDetails] = useLazyQuery<GetCompanyDetailsResponse>(
+	const [getCompanyDetails, { loading, data }] = useLazyQuery<GetCompanyDetailsResponse>(
 		GET_COMPANY_DETAILS, { variables: { tin: searchParams.get('tin') || '' }}
 	);
 
@@ -21,38 +22,35 @@ function ViewEntityPage(): JSX.Element {
 		if (companyDetails === null) {
 			getCompanyDetails()
 				.then((resp) => {
-					const apiResult = resp.data?.getCompanyDetails.result;
-					const apiError = resp.data?.getCompanyDetails.error;
-					const apiData = resp.data?.getCompanyDetails.data;
-					if (!apiResult && apiError) {
-						setErrorMessage(apiError);
-					} else if (apiResult && apiData) {
-						setCompanyDetails(apiData);
+					const gql = resp.data?.getCompanyDetails;
+					if (gql?.result && gql?.data) {
+						setCompanyDetails(gql.data);
 					}
 				})
 				.catch(() => null);
 		}
 	}, [])
-	
+
 	return (
 		<div style={{position: 'relative'}}>
 			<Center className={styles.mainContent}>
-				{errorMessage ? 
+				{(!companyDetails && !loading && !data) || loading ?
+					<Loader color="green" size="xl" />
+				: !companyDetails ?
 					<Text className={styles.errorMsgStyle}> 
-						{errorMessage} 
+						{t("view.no-results")} 
 					</Text>
-				: null}
-				{companyDetails ?
+				: 
 					<Stack spacing={0}>
 						<Text className={styles.viewCompanyTitle}>
-							Ettevõtte ülevaade
+							{t("view.title")}
 						</Text>
 						<CompanyDetailsCard detailsData={companyDetails}/>
 					</Stack>
-				: null}
+				}
 			</Center>
 		</div>
 	);
 }
 
-export default ViewEntityPage;
+export default ViewCompanyPage;

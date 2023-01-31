@@ -1,22 +1,24 @@
 import { useRef } from 'react';
-import { SearchField } from '@components';
-import { SEARCH_COMPANIES } from '@graphql';
-import { SearchCompaniesResponse } from '@types';
-import { Text, Center, Stack } from '@mantine/core';
 import { useLazyQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
+import { Text, Center, Stack } from '@mantine/core';
+import { SearchCompaniesResponse } from '@types';
+import { SEARCH_COMPANIES } from '@graphql';
+import { SearchField } from '@components';
 import SearchResultCard from './components/SearchResultCard';
 import styles from './MainPage.module.css';
 
 
 function MainPage(): JSX.Element {
+	const { t } = useTranslation('pages');
 	const inputRef = useRef<HTMLInputElement | null>(null);
-	const [searchCompanies, { data }] = useLazyQuery<SearchCompaniesResponse>(SEARCH_COMPANIES, 
-		{ variables: { pattern: inputRef.current?.value || '' }}
+	const [searchCompanies, { data }] = useLazyQuery<SearchCompaniesResponse>(
+		SEARCH_COMPANIES, { variables: { pattern: inputRef.current?.value || '' }}
 	);
 	const apiResult = data?.searchCompanies.result;
 	const apiError = data?.searchCompanies.error;
 	const apiData = data?.searchCompanies.data;
-	
+
 	return (
 		<div style={{position: 'relative'}}>
 			<Center className={styles.mainContent}>
@@ -24,7 +26,7 @@ function MainPage(): JSX.Element {
 					<Center>
 						<div style={{width: '50vw'}}>
 							<Text className={styles.searchFieldTitle}>
-								Juriidilise isiku otsing
+								{t('main.title')}
 							</Text>
 							<SearchField inputRef={inputRef} callback={searchCompanies}/>
 						</div>
@@ -33,9 +35,9 @@ function MainPage(): JSX.Element {
 						<Center>
 							<Text className={styles.searchResultsText}>
 								{apiData ?
-									<span>{`Otsingu tulemused (${apiData.length})`}</span>
+									<span>{`${t("main.results")} (${apiData.length})`}</span>
 								: apiError ?
-									<span>{apiError}</span>
+									<span>{t("main.no-results")}</span>
 								: null}
 							</Text>
 						</Center>

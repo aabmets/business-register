@@ -1,9 +1,14 @@
 from datetime import datetime, date, timedelta
 from pydantic import validator, root_validator
 from .judicial_person import JudicialPerson
+from .natural_person import NaturalPerson
 from .shareholder import Shareholders
 from copy import deepcopy
 from dotmap import DotMap
+
+
+# -------------------------------------------------------------------------------- #
+Shareholder = JudicialPerson | NaturalPerson
 
 
 # -------------------------------------------------------------------------------- #
@@ -87,8 +92,23 @@ class Company(JudicialPerson):
         return f_date
 
     # ------------------------------------------------------------ #
-    @root_validator(pre=True, skip_on_failure=False)
-    def validate_company_shareholders(cls, values: dict) -> dict:
+    @validator("equity")
+    def validate_company_equity(cls, equity: int) -> int:
+        """
+        This function extends the base equity validation by validating
+        that the equity of a Company is at least 2 500 units.
+
+        :raises "equity.company-too-small": if equity is less than 2500.
+        :param equity: Equity of the company, integer.
+        :return: Dict of all previously validated fields, unmodified.
+        """
+        if equity < 2500:
+            raise ValueError("equity.company-too-small")
+        return equity
+
+    # ------------------------------------------------------------ #
+    @validator("shareholders", always=True)
+    def validate_shareholders(cls, shds: list, values: dict) -> list:
         """
         This function validates that the equities of the shareholders
         of a company are equal to the equity of the company.
@@ -99,37 +119,35 @@ class Company(JudicialPerson):
             contains persons with identical TIN-s.
         :raises "shareholders.equity-mismatch": if the equities of the
             shareholders do not equal the equity of the company.
-        :param values: Dict of all model fields.
-        :return: List of shareholders.
+        :param shds: List of shareholders.
+        :param values: Dict of all previously validated fields.
+        :return: List of shareholders, unmodified.
         """
-        shds: Shareholders = values.get("shareholders")
         if not shds:
             raise TypeError("shareholders.empty-not-allowed")
         tins = [sh.tin for sh in shds]
         if len(tins) != len(set(tins)):
             raise ValueError("shareholders.duplicates-not-allowed")
-        if values.get("tin") in tins:
-            raise ValueError("shareholders.self-company-not-allowed")
-        names = [sh.name for sh in shds]
-        if values.get("name") in names:
-            raise ValueError("shareholders.self-company-not-allowed")
         shds_equity = sum([sh.equity for sh in shds])
-        company_equity = values.get('equity', 0)
-        if company_equity != shds_equity:
+        company_equity = values.get('equity')
+        if company_equity and company_equity != shds_equity:
             raise ValueError("shareholders.equity-mismatch")
-        return values
+        return shds
 
     # ------------------------------------------------------------ #
-    @validator("equity", always=True)
-    def validate_company_equity(cls, equity: int) -> int:
+    @validator("shareholders", each_item=True)
+    def validate_each_shareholder(cls, sh: Shareholder, values: dict) -> Shareholder:
         """
-        This function extends the base equity validation by validating
-        that the equity of a Company is at least 2 500 units.
+        This function validates that the company is not set as its own shareholder.
 
-        :raises "equity.company-too-small": if equity is less than 2500.
-        :param equity: Company equity, integer.
-        :return: Company equity, unmodified.
+        :raises "shareholders.self-company-not-allowed": if the
+            company is set as its own shareholder.
+        :param sh: Each shareholder in the shareholders list.
+        :param values: Dict of all previously validated fields.
+        :return: List of shareholders, unmodified.
         """
-        if equity < 2500:
-            raise ValueError("equity.company-too-small")
-        return equity
+        c_name = values.get("name", "")
+        c_tin = values.get("tin", "")
+        if sh.name == c_name or sh.tin == c_tin:
+            raise ValueError("shareholders.self-company-not-allowed")
+        return sh

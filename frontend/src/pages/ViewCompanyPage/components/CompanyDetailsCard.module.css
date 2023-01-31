@@ -28,30 +28,27 @@
 	border-bottom: 1px solid #dedede;
 	margin-bottom: 10px;
 }
-.space {
-	margin-left: 20px;
-}
 .shPct {
 	min-width: 80px;
 	text-align: end;
 	padding-left: 5px;
 	padding-right: 5px;
 }
-.shEquity {
+.shShares {
 	width: 10%;
-	min-width: 90px;
+	min-width: 80px;
 	max-width: 130px;
 	text-align: start;
 	white-space: nowrap;
-	padding-left: 5px;
-	padding-right: 5px;
+	margin-left: 25px;
+	margin-right: 5px;
 }
 .shName {
 	width: 100%;
 	min-width: 150px;
 	text-align: start;
 	white-space: nowrap;
-	margin-left: 5px;
+	margin-left: 25px;
 	margin-right: 5px;
 }
 .shTin {
@@ -59,7 +56,7 @@
 	min-width: 100px; 
 	max-width: 150px;
 	text-align: end;
-	margin-left: 10px;
+	margin-left: 30px;
 	margin-right: 10px;
 }
 .shFounder {

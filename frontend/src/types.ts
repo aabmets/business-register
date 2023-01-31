@@ -2,6 +2,13 @@ import { UseFormReturnType } from '@mantine/form';
 
 
 // ------------------------------------------------------ //
+enum Mutation {
+	CREATE = 'create',
+	UPDATE = 'update',
+}
+export { Mutation }
+
+// ------------------------------------------------------ //
 interface Shareholder {
 	name: string;
 	tin: string;
@@ -63,41 +70,36 @@ export type { OutgoingCompanyDetails }
 
 
 // ------------------------------------------------------ //
-interface ApiError {
+interface ErrorResponse {
 	field_id: string;
 	message: string;
 }
-interface CreateCompanyResponse {
-	createCompany: {
-		data: CompanyDetails | null;
-		result: boolean;
-		errors: ApiError[] | null;
-	}
+interface MutationResponse {
+	data: CompanyDetails | null;
+	errors: ErrorResponse[] | null;
+	result: boolean;
 }
-interface UpdateCompanyResponse {
-	updateCompany: {
-		data: CompanyDetails | null;
-		result: boolean;
-		errors: ApiError[] | null;
-	}
+interface MutateCompanyResponse {
+	createCompany?: MutationResponse;
+	updateCompany?: MutationResponse;
 }
 interface SearchCompaniesResponse {
 	searchCompanies: {
 		error: string | null;
-		result: boolean;
 		data: CompanyOverview[] | null
+		result: boolean;
 	}
 }
 interface GetCompanyDetailsResponse {
 	getCompanyDetails: {
 		error: string;
-		result: boolean;
 		data: CompanyDetails;
+		result: boolean;
 	}
 }
-export type { ApiError };
-export type { CreateCompanyResponse };
-export type { UpdateCompanyResponse };
+export type { ErrorResponse };
+export type { MutationResponse };
+export type { MutateCompanyResponse };
 export type { SearchCompaniesResponse };
 export type { GetCompanyDetailsResponse };
 

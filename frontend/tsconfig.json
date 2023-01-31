@@ -19,6 +19,7 @@
 		"paths": {
 			"@components": ["src/components/_exports"],
 			"@context": ["src/context/_exports"],
+			"@hooks": ["src/hooks/_exports"],
 			"@utils": ["src/utils/_exports"],
 			"@pages": ["src/pages/_exports"],
 			"@graphql": ["src/graphql"],

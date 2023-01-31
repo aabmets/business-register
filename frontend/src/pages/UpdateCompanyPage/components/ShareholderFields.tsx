@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Button, Space } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import { HiOutlineTrash } from 'react-icons/hi';
 import { Flex, ActionIcon } from '@mantine/core';
 import { TextInput, NumberInput } from '@mantine/core';
 import { SearchCompaniesModal } from '@components';
-import { HiOutlineTrash } from 'react-icons/hi';
 import { getBlankShareholder } from '@utils';
 import { useCompanyDetails } from '@context';
 import { MantineForm } from "@types";
@@ -13,6 +14,7 @@ import styles from './ShareholderFields.module.css';
 type FormProps = { form: MantineForm };
 
 function ShareholderFields({ form }: FormProps): JSX.Element {
+	const { t } = useTranslation('pages');
 	const { companyDetails } = useCompanyDetails();
 	const [mountKey, setMountKey] = useState(0);
 	const [opened, setOpened] = useState(false);
@@ -45,7 +47,7 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 						<TextInput
 							disabled={inDatabase}
 							className={styles.nameInput}
-							placeholder='Osaniku nimi'
+							placeholder={t("update.sh-name") + ''}
 							{...form.getInputProps(`shareholders.${index}.name`)}
 							sx={{'.mantine-TextInput-error': {
 								whiteSpace: 'nowrap',
@@ -60,7 +62,7 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 						<NumberInput
 							disabled={inDatabase}
 							className={styles.tinInput}
-							placeholder='Isikukood'
+							placeholder={t("update.sh-tin") + ''}
 							maxLength={11}
 							hideControls
 							{...form.getInputProps(`shareholders.${index}.tin`)}
@@ -75,17 +77,13 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 							}}}
 						/>
 						<NumberInput
-							className={styles.equityInput}
-							placeholder='Osakapital'
+							className={styles.sharesInput}
+							placeholder={t("update.sh-shares") + ''}
 							maxLength={5}
 							withAsterisk
 							hideControls
 							icon='€'
 							{...form.getInputProps(`shareholders.${index}.equity`)}
-							sx={{'.mantine-NumberInput-error': {
-								whiteSpace: 'nowrap',
-								wordBreak: 'keep-all',
-							}}}
 						/>
 						<div className={styles.actionIcon}>
 							<ActionIcon
@@ -101,10 +99,10 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 			})}
 			<Flex gap='md'>
 				<Button compact color='teal' type='button' onClick={addShareholder}>
-					Lisa uus isik
+					{t("update.add-new-person")}
 				</Button>
 				<Button compact color='cyan' type='button' onClick={openModal}>
-					Otsi ettevõtteid
+					{t("update.search-companies")}
 				</Button>
 			</Flex>
 			<Space h="sm"/>

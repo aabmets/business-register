@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { TextInput, Button } from "@mantine/core";
 import { useStyles } from './SearchField.styles';
 import { HiSearch } from 'react-icons/hi';
@@ -10,6 +11,7 @@ interface SearchInputProps {
 }
 
 function SearchField(props: SearchInputProps): JSX.Element {
+	const { t } = useTranslation('common');
 	const { inputRef, callback } = props;
 	const { classes } = useStyles();
 
@@ -17,8 +19,8 @@ function SearchField(props: SearchInputProps): JSX.Element {
 		<div className={classes.searchFieldGroup}>
 			<TextInput 
 				className={classes.searchInput}
-				placeholder="Nimi või registrikoodi number"
 				onKeyDown={(e) => (e.key === 'Enter' ? callback() : null)}
+				placeholder={t("search.placeholder") + ''}
 				autoComplete="off"
 				ref={inputRef}
 			/>

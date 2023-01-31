@@ -1,8 +1,13 @@
+.resultsFound {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.resultsNotFound {
+	padding-top: 20px;
+}
 .searchResultsText {
 	font-size: 1.2rem;
 	font-weight: 600;
-	padding-top: 20px;
-	padding-bottom: 20px;
 	color: rgb(36, 36, 36);
 }
 .line {

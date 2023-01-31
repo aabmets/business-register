@@ -103,7 +103,7 @@ async def resolve_update_company(_, __, data: dict):
 
     db_company = DotMap(dict(result))
     if parsed_company.equity <= db_company.equity:
-        errors(field_id, "equity.equity-must-increase")
+        errors(field_id, "equity.must-increase")
         return errors.to_dict()
 
     parsed_shds = parsed_company.shareholders
@@ -119,7 +119,7 @@ async def resolve_update_company(_, __, data: dict):
             errors(found_sh.field_id, "name.shareholder-name-mismatch")
             break
         elif found_sh.equity < db_sh.equity:
-            errors(found_sh.field_id, "equity.shareholder-equity-decrease")
+            errors(found_sh.field_id, "equity.shares-decrease-not-allowed")
             break
         else:
             found_sh.founder = db_sh.founder

@@ -1,6 +1,7 @@
 .mainContent {
 	display: flex;
 	margin-top: 150px;
+	padding-bottom: 100px;
 	justify-content: center;
 	position: absolute;
 	width: 100%;

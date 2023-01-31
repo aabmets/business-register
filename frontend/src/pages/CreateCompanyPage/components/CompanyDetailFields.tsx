@@ -1,5 +1,6 @@
 import { MantineForm } from "@types";
 import { DatePicker } from '@mantine/dates';
+import { useTranslation } from 'react-i18next';
 import { TextInput, NumberInput, Flex } from '@mantine/core';
 import styles from './CompanyDetailFields.module.css';
 import 'dayjs/locale/et';
@@ -8,65 +9,50 @@ import 'dayjs/locale/et';
 type FormProps = { form: MantineForm };
 
 function CompanyDetailFields({ form }: FormProps): JSX.Element {
+	const { t } = useTranslation('pages');
 	return (
 		<Flex gap='md'>
 			<TextInput
 				className={styles.nameInput}
-				placeholder='Ettevõtte nimi'
-				label='Ettevõtte nimi'
+				placeholder={t('create.cp-name') + ''}
+				label={t('create.cp-name')}
 				withAsterisk
 				{...form.getInputProps('name')}
-				sx={{'.mantine-TextInput-error': {
-					whiteSpace: 'nowrap',
-					wordBreak: 'keep-all',
-				}}}
 			/>
 			<NumberInput
 				className={styles.tinInput}
-				placeholder='Registrikood'
-				label='Registrikood'
+				placeholder={t('create.cp-reg-tin') + ''}
+				label={t('create.cp-reg-tin')}
 				maxLength={8}
 				withAsterisk
 				hideControls
 				{...form.getInputProps('tin')}
-				sx={{'.mantine-NumberInput-error': {
-					whiteSpace: 'nowrap',
-					wordBreak: 'keep-all',
-				}}}
 			/>
 			<NumberInput
 				className={styles.equityInput}
-				placeholder='Osakapital'
-				label='Osakapital'
+				placeholder={t('create.cp-equity') + ''}
+				label={t('create.cp-equity')}
 				maxLength={5}
 				withAsterisk
 				hideControls
 				icon='€'
 				{...form.getInputProps('equity')}
-				sx={{'.mantine-NumberInput-error': {
-					whiteSpace: 'nowrap',
-					wordBreak: 'keep-all',
-				}}}
 			/>
 			<DatePicker 
 				className={styles.datePickerInput}
 				dropdownType='modal'
-				placeholder='Asutamise kuupäev' 
-				label='Asutamise kuupäev' 
+				placeholder={t('create.cp-founding-date') + ''}
+				label={t('create.cp-founding-date')}
+				inputFormat='D. MMMM YYYY'
 				locale='et'
 				withAsterisk
 				maxDate={new Date()}
-				inputFormat='D. MMMM YYYY'
 				minDate={(() => {
 					var date = new Date();
 					date.setDate(date.getDate() - 30);
 					return date
 				})()}
 				{...form.getInputProps('founding_date')}
-				sx={{'.mantine-DatePicker-error': {
-					whiteSpace: 'nowrap',
-					wordBreak: 'keep-all',
-				}}}
 			/>
 		</Flex>
 	);

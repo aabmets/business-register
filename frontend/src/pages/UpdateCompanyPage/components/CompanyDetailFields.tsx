@@ -1,5 +1,6 @@
 import { MantineForm } from "@types";
 import { DatePicker } from '@mantine/dates';
+import { useTranslation } from 'react-i18next';
 import { TextInput, NumberInput, Flex } from '@mantine/core';
 import styles from './CompanyDetailFields.module.css';
 import 'dayjs/locale/et';
@@ -8,12 +9,13 @@ import 'dayjs/locale/et';
 type FormProps = { form: MantineForm };
 
 function CompanyDetailFields({ form }: FormProps): JSX.Element {
+	const { t } = useTranslation('pages');
 	return (
 		<Flex gap='md'>
 			<TextInput
 				disabled
 				className={styles.nameInput}
-				label='Ettevõtte nimi'
+				label={t("update.cp-name")}
 				{...form.getInputProps('name')}
 				sx={{'.mantine-TextInput-error': {
 					whiteSpace: 'nowrap',
@@ -28,7 +30,7 @@ function CompanyDetailFields({ form }: FormProps): JSX.Element {
 			<NumberInput
 				disabled
 				className={styles.tinInput}
-				label='Registrikood'
+				label={t("update.cp-reg-tin")}
 				maxLength={8}
 				hideControls
 				{...form.getInputProps('tin')}
@@ -44,22 +46,18 @@ function CompanyDetailFields({ form }: FormProps): JSX.Element {
 			/>
 			<NumberInput
 				className={styles.equityInput}
-				placeholder='Osakapital'
-				label='Osakapital'
+				placeholder={t("update.cp-equity") + ''}
+				label={t("update.cp-equity")}
 				maxLength={5}
 				withAsterisk
 				hideControls
 				icon='€'
 				{...form.getInputProps('equity')}
-				sx={{'.mantine-NumberInput-error': {
-					whiteSpace: 'nowrap',
-					wordBreak: 'keep-all',
-				}}}
 			/>
 			<DatePicker 
 				disabled
 				className={styles.datePickerInput}
-				label='Asutamise kuupäev' 
+				label={t("update.cp-founding-date")}
 				dropdownType='modal'
 				locale='et'
 				maxDate={new Date()}

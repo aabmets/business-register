@@ -1,0 +1,59 @@
+{
+	"error": {
+		"search-pattern-too-short": "Otsing peab olema vähemalt 3 tähemärki.",
+		"search-pattern-too-long": "Otsing on liiga pikk.",
+		"invalid-search-pattern": "Otsingusõna sisaldab sobimatuid tähti.",
+		"no-search-results": "Otsing ei leidnud tulemusi.",
+		"invalid-search-tin": "Sobimatu registrikood.",
+		"details-not-found": "Ettevõtet ei leitud."
+	},
+	"name": {
+		"company-already-exists": "Sama nimega ettevõte juba eksisteerib.",
+		"company-doesnt-exist": "Ettevõtet ei eksisteeri.",
+		"shareholder-name-mismatch": "Nõutud osaniku nime ei saa muuta.",
+		"empty-not-allowed": "Nime väli peab olema täidetud.",
+		"too-short": "Nimi peab olema pikem kui 3 tähemärki.",
+		"too-long": "Nimi peab olema lühem kui 100 tähemärki.",
+		"not-natural-type": "Sobimatu eraisiku nimi.",
+		"not-judicial-type": "Nimi peab sisaldama ühte OÜ lisandit.",
+		"invalid-char-natural": "Eraisiku nimi sisaldab sobimatuid tähemärke.",
+		"invalid-char-judicial": "Ettevõtte nimi sisaldab sobimatuid tähemärke.",
+		"not-full-natural": "Eraisiku nimi peab sisaldama perekonnanime.",
+		"invalid-id-count": "Nimi ei tohi sisaldada mitut OÜ lisandit.",
+		"invalid-id-value": "Nime OÜ lisand peab olema eraldi sõna.",
+		"invalid-id-position": "Nime OÜ lisand ei tohi asetseda nime keskel."
+	},
+	"tin": {
+		"company-already-exists": "Sama koodiga ettevõte juba eksisteerib.",
+		"empty-not-allowed": "Isikukoodi väli peab olema täidetud.",
+		"invalid-digit": "Isikukood sisaldab sobimatuid tähemärke.",
+		"invalid-length": "Isikukood on sobimatu pikkusega.",
+		"not-natural-type": "Sobimatu struktuuriga isikukood.",
+		"not-judicial-type": "Sobimatu struktuuriga registrikood.",
+		"invalid-date-data": "Vigane isikukoodi kuupäev.",
+		"invalid-prefix-data": "Sobimatu väärtusega registrikood.",
+		"invalid-natural-checksum": "Vigane isikukoodi kontrollkood.",
+		"invalid-judicial-checksum": "Vigane registrikoodi kontrollkood."
+	},
+	"equity": {
+		"must-increase": "Osakapital peab suurenema",
+		"shares-decrease-not-allowed": "Nõutud osaniku osamaks ei saa väheneda.",
+		"empty-not-allowed": "Osakapitali väli peab olema täidetud.",
+		"too-small": "Osakapital peab olema vähemalt 1 EUR.",
+		"too-large": "Osakapital ei saa olla suurem kui 25000 EUR.",
+		"company-too-small": "Ettevõtte osakapital peab olema vähemalt 2500 EUR."
+	},
+	"date": {
+		"empty-not-allowed": "Kuupäeva väli peab olema täidetud.",
+		"invalid-format": "Sobimatu struktuuriga kuupäev.",
+		"future-not-allowed": "Tuleviku kuupäeva ei saa valida.",
+		"too-far-past": "Ettevõtte asutamiskuupäev ei saa olla vanem kui 30 päeva."
+	},
+	"shareholders": {
+		"missing-shareholder": "Nõutud osanik on puudu.",
+		"empty-not-allowed": "Osanike nimekiri ei või tühjaks jääda.",
+		"duplicates-not-allowed": "Osanike nimekiri ei või sisaldada duplikaate.",
+		"self-company-not-allowed": "Ettevõte ei saa olla iseenda osanik.",
+		"equity-mismatch": "Osanike osamaksete summa ei võrdu ettevõtte osakapitaliga."
+	}
+}

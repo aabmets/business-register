@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { MantineForm } from "@types";
 import { getBlankShareholder } from '@utils';
 import { SearchCompaniesModal } from '@components';
-import { Button, ActionIcon, Space } from '@mantine/core';
 import { TextInput, NumberInput, Flex } from '@mantine/core';
+import { Button, ActionIcon, Space } from '@mantine/core';
 import { HiOutlineTrash } from 'react-icons/hi';
+import { useTranslation } from 'react-i18next';
 import styles from './ShareholderFields.module.css';
 
 
 type FormProps = { form: MantineForm };
 
 function ShareholderFields({ form }: FormProps): JSX.Element {
+	const { t } = useTranslation('pages');
 	const [mountKey, setMountKey] = useState(0);
 	const [opened, setOpened] = useState(false);
 	const openModal = () => setOpened(true);
@@ -45,36 +47,24 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 				<Flex key={item.field_id} className={styles.inputFields}>
 					<TextInput
 						className={styles.nameInput}
-						placeholder='Osaniku nimi'
+						placeholder={t('create.sh-name') + ''}
 						{...form.getInputProps(`shareholders.${index}.name`)}
-						sx={{'.mantine-TextInput-error': {
-							whiteSpace: 'nowrap',
-							wordBreak: 'keep-all',
-						}}}
 					/>
 					<NumberInput
 						className={styles.tinInput}
-						placeholder='Isikukood'
+						placeholder={t('create.sh-tin') + ''}
 						maxLength={11}
 						hideControls
 						{...form.getInputProps(`shareholders.${index}.tin`)}
-						sx={{'.mantine-NumberInput-error': {
-							whiteSpace: 'nowrap',
-							wordBreak: 'keep-all',
-						}}}
 					/>
 					<NumberInput
 						className={styles.equityInput}
-						placeholder='Osakapital'
+						placeholder={t('create.sh-shares') + ''}
 						maxLength={5}
 						withAsterisk
 						hideControls
 						icon='€'
 						{...form.getInputProps(`shareholders.${index}.equity`)}
-						sx={{'.mantine-NumberInput-error': {
-							whiteSpace: 'nowrap',
-							wordBreak: 'keep-all',
-						}}}
 					/>
 					<div className={styles.actionIcon}>
 						<ActionIcon
@@ -89,13 +79,13 @@ function ShareholderFields({ form }: FormProps): JSX.Element {
 			))}
 			<Flex gap='md'>
 				<Button compact color='teal' type='button' onClick={addShareholder}>
-					Lisa uus isik
+					{t('create.add-new-person')}
 				</Button>
 				<Button compact color='yellow' type='button' onClick={clearShareholders} disabled={isSingle}>
-					Eemalda kõik
+					{t('create.remove-all')}
 				</Button>
 				<Button compact color='cyan' type='button' onClick={openModal}>
-					Otsi ettevõtteid
+					{t('create.search-companies')}
 				</Button>
 			</Flex>
 			<Space h="sm"/>
