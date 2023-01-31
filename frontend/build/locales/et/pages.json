@@ -1,0 +1,58 @@
+{
+	"main": {
+		"title": "Juriidilise isiku otsing",
+		"results": "Otsingu tulemused",
+		"no-results": "Otsing ei leidnud tulemusi.",
+		"reg-tin": "Registrikood"
+	},
+	"view": {
+		"title": "Ettevõtte ülevaade",
+		"no-results": "Otsing ei leidnud tulemusi.",
+		"cp-name": "Ettevõtte nimi",
+		"cp-reg-tin": "Registrikood",
+		"cp-equity": "Osakapital",
+		"cp-founding-date": "Asutamise kuupäev",
+		"sh-pct": "Osalus",
+		"sh-shares": "Osamaks",
+		"sh-name": "Nimi",
+		"sh-tin": "Isikukood",
+		"sh-founder": "Asutaja",
+		"sh-type": "Tüüp",
+		"true": "Jah",
+		"false": "Ei",
+		"judicial": "Ettevõte",
+		"natural": "Eraisik"
+	},
+	"update": {
+		"title": "Osakapitali muutmine",
+		"success": "Ettevõtte osakapital on muudetud.",
+		"no-results": "Otsing ei leidnud tulemusi.",
+		"shareholders": "Osanikud",
+		"add-new-person": "Lisa uus isik",
+		"search-companies": "Otsi ettevõtteid",
+		"change-equity": "Muuda osakapitali",
+		"cp-name": "Ettevõtte nimi",
+		"cp-reg-tin": "Registrikood",
+		"cp-equity": "Osakapital",
+		"cp-founding-date": "Asutamise kuupäev",
+		"sh-name": "Osaniku nimi",
+		"sh-tin": "Isikukood",
+		"sh-shares": "Osamaks"
+	},
+	"create": {
+		"title": "Ettevõtte asutamine",
+		"success": "Uus ettevõte on asutatud.",
+		"shareholders": "Osanikud",
+		"company": "Asuta ettevõte",
+		"add-new-person": "Lisa uus isik",
+		"remove-all": "Eemalda kõik",
+		"search-companies": "Otsi ettevõtteid",
+		"cp-name": "Ettevõtte nimi",
+		"cp-reg-tin": "Registrikood",
+		"cp-equity": "Osakapital",
+		"cp-founding-date": "Asutamise kuupäev",
+		"sh-name": "Osaniku nimi",
+		"sh-tin": "Isikukood",
+		"sh-shares": "Osamaks"
+	}
+}

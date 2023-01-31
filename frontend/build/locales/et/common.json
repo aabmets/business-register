@@ -1,0 +1,19 @@
+{
+	"header": {
+		"new-company": "UUS OSAÜHING",
+		"goto-main-page": "AVALEHELE",
+		"change-equity": "MUUDA OSAKAPITALI",
+		"back": "TAGASI"
+	},
+	"search": {
+		"placeholder": "Nimi või registrikoodi number",
+		"modal-title": "Ettevõtja osanikuks lisamine",
+		"modal-results": "Otsingu tulemused",
+		"modal-no-results": "Otsing ei leidnud tulemusi.",
+		"modal-add-sh": "Lisa osanikuks"
+	},
+	"notifications": {
+		"success": "Tehing õnnestus!",
+		"failure": "Tehing ebaõnnestus!"
+	}
+}
