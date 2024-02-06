@@ -12,7 +12,7 @@ The project took about four workweeks to complete.
 1. Install Node.js from https://nodejs.org/en/download/
 2. Install Python from https://www.python.org/downloads/
 3. Install PostgreSQL from https://www.postgresql.org/download/
-4. Download this repository and unpack the rik-business-register folder into the location of your choice.
+4. Download this repository and unpack the business-register folder into the location of your choice.
 5. Navigate into the scripts subfolder and execute both server scripts.
 6. After the servers have started up, execute the "open_browser.bat" script.
 7. ???
